@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-if="isReloaded"></router-view>
   </div>
 </template>
 
@@ -9,6 +9,24 @@
 export default {
   name: 'app',
   components: {
+  },
+  data() {
+    return {
+      isReloaded: true
+    }
+  },
+  provide() {
+    return {
+      reload: this.reload
+    }
+  },
+  methods: {
+    reload() {
+      this.isReloaded = false
+      this.$nextTick(() => {
+        this.isReloaded = true
+      })
+    }
   }
 }
 </script>

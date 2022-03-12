@@ -42,7 +42,7 @@ const routes = [
       {
         path: '/manage',
         name: 'manage',
-        component: () => import('../views/Manage.vue'),
+        component: () => import('../views/storageManage/manage.vue'),
         meta: {
           title: '进销存'
         }
@@ -61,7 +61,7 @@ const routes = [
       {
         path: '/invoice',
         name: 'invoice',
-        component: () => import('../views/Invoice.vue'),
+        component: () => import('../views/invoice/invoice.vue'),
         meta: {
           title: '发票'
         }
@@ -80,7 +80,7 @@ const routes = [
       {
         path: '/reportForms',
         name: 'reportForms',
-        component: () => import('../views/ReportForms.vue'),
+        component: () => import('../views/forms/reportForms.vue'),
         meta: {
           title: '报表'
         }

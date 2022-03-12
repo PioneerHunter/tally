@@ -20,7 +20,7 @@
         <i class="icon el-icon-setting"></i>
       </el-tooltip>
     </div>
-    <div class="sider-icon">
+    <div class="sider-icon" @click="() => { $router.push('/') }">
       <el-tooltip class="item" effect="light" content="收起" placement="right">
         <i class="icon el-icon-s-fold"></i>
         <i class="icon el-icon-s-unfold"></i>
@@ -44,7 +44,7 @@ export default {
     console.log(1);
   },
   mounted () {
-    console.log(router, 2);
+    // console.log(router, 2);
   },
   methods: {}
 }

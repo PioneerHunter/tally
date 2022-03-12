@@ -1,6 +1,7 @@
 <template>
   <div class="page purchase-sale-stock">
     <h3>进销存管理</h3>
+    <button @click="openDialog">进货</button>
     <div class="list">
       <el-table
         :data="tableData"
@@ -21,13 +22,20 @@
         </el-table-column>
       </el-table>
     </div>
+    
+    <purchase-dialog ref="PurchaseDialog" @on-exit="refresh"></purchase-dialog>
   </div>
 </template>
 
 <script>
+import PurchaseDialog from './purchase.vue'
+
 export default {
   name: 'Manage',
-  components: {},
+  inject: ['reload'],
+  components: {
+    PurchaseDialog,
+  },
   data () {
     return {
       tableData: [{
@@ -50,10 +58,16 @@ export default {
     }
   },
   create () {
-    console.log(3);
   },
   mounted () {},
-  methods: {}
+  methods: {
+    openDialog() {
+      this.$refs.PurchaseDialog.openDialog()
+    },
+    refresh() {
+      this.reload()
+    },
+  }
 }
 </script>
 

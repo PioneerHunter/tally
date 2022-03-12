@@ -64,7 +64,7 @@ export default {
             if (res.data.verifySuccess === true) {
               let storage = sessionStorage
               storage.setItem("loginState", 2)
-              this.$router.push('home')
+              this.$router.push('manageStorage')
             }
             // console.log(res)
           })
