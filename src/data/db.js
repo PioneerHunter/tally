@@ -1,7 +1,7 @@
 import Dexie from "dexie"
 
-export cosnt db = new Dexie('myDatabase')
+export const db = new Dexie('myDatabase')
 db.version(1).stores({
-    friends: '++id, name, age',
+    purchase: '++id, name, supplier, buyer, indentData, arriveData',
 })
 // purchase-sell-stock

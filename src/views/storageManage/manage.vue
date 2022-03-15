@@ -7,18 +7,40 @@
         :data="tableData"
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
+          prop="id"
+          label="编号">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="姓名"
-          width="180">
+          label="商品名">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址">
+          prop="supplier"
+          label="供应商">
+        </el-table-column>
+        <el-table-column
+          prop="buyer"
+          label="采购人员">
+        </el-table-column>
+        <el-table-column
+          prop="money"
+          label="总金额">
+        </el-table-column>
+        <el-table-column
+          prop="invoiceNum"
+          label="发票号">
+        </el-table-column>
+        <el-table-column
+          prop="indentData"
+          label="订单日期">
+        </el-table-column>
+        <el-table-column
+          prop="arriveData"
+          label="到货日期">
+        </el-table-column>
+        <el-table-column
+          prop="notes"
+          label="备注">
         </el-table-column>
       </el-table>
     </div>
@@ -29,6 +51,7 @@
 
 <script>
 import PurchaseDialog from './purchase.vue'
+import { db } from '@/data/db'
 
 export default {
   name: 'Manage',
@@ -38,28 +61,17 @@ export default {
   },
   data () {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: [],
     }
   },
   create () {
   },
-  mounted () {},
+  mounted () {
+    db.purchase.orderBy('id').offset(0).toArray().then((val) => {
+      console.log(val);
+      this.tableData = val
+    })
+  },
   methods: {
     openDialog() {
       this.$refs.PurchaseDialog.openDialog()

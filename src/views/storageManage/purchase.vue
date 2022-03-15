@@ -14,7 +14,10 @@
           :rules="rules"
           :inline="true">
           <el-form-item label="编号">
-            <el-input v-model="form.name" disabled></el-input>
+            <el-input v-model="form.id" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="商品名" prop="name">
+            <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item label="订单日期">
             <el-date-picker
@@ -40,7 +43,7 @@
             <el-input v-model="form.buyer"></el-input>
           </el-form-item>
           <el-form-item label="总金额" prop="money">
-            <el-input v-model="form.money"></el-input>
+            <el-input v-model.number="form.money" type="number"></el-input>
           </el-form-item>
           <div>
             <el-form-item label="备注">
@@ -65,6 +68,9 @@
 </template>
 
 <script>
+import { db } from '@/data/db'
+import moment from 'moment'
+
 export default {
   name: 'Purchase',
   components: {},
@@ -73,6 +79,7 @@ export default {
       visible: false,
       form: {
         name: '',
+        id: '',
         indentData: '',
         supplier: '',
         arriveData: '',
@@ -82,8 +89,11 @@ export default {
         notes: '',
       },
       rules: {
+        name: [
+          { required: true, message: '请输入商品名', trigger: 'change' }
+        ],
         money: [
-          { required: true, message: '请输入总金额', trigger: 'change' }
+          { required: true, message: '总金额必须且为数字', trigger: 'change' }
         ],
         invoiceNum: [
           { required: true, message: '请输入发票号', trigger: 'change' }
@@ -94,6 +104,12 @@ export default {
   create () {
   },
   mounted () {
+    // db.purchase.orderBy('id').offset(5).limit(5).toArray().then((val) => {
+    //   console.log(val);
+    // })
+    // db.purchase.orderBy('id').offset(2).limit(2).toArray().then((val) => {
+    //   console.log(val);
+    // })
   },
   methods: {
     openDialog() {
@@ -108,13 +124,36 @@ export default {
       //   })
       //   .catch(_ => {});
     },
-    storage() {
-      this.$refs['form'].validate(valid => {
-        if (valid) {
-          this.visible = false
-          this.$emit('on-exit')
-        }
+    async storage() {
+      let valid
+      this.$refs['form'].validate(val => {
+        if (val) valid = true
       })
+      if (valid) {
+        this.visible = false
+        this.$emit('on-exit')
+        try {
+          // 时间格式化
+          let indent = this.form.indentData
+          let arrive = this.form.arriveData
+          indent = indent && moment(this.form.indentData).format('YYYY/MM/DD HH:mm:ss')
+          arrive = arrive && moment(this.form.arriveData,).format('YYYY/MM/DD HH:mm:ss')
+          // ++id, money, invoiceNum, indentData, arriveData, notes
+          const id = await db.purchase.add({
+            name: this.form.name,
+            supplier: this.form.supplier,
+            buyer: this.form.buyer,
+            money: this.form.money,
+            invoiceNum: this.form.invoiceNum,
+            indentData: indent,
+            arriveData: arrive,
+            notes: this.form.notes,
+          })
+          console.log(id);
+        } catch (err) {
+          console.log('加入失败！' + err);
+        }
+      }
     },
   }
 }
