@@ -1,7 +1,7 @@
 <template>
   <div class="purcahse-dialog">
     <el-dialog
-      title="采购订单"
+      :title="mode === 'enter' ? '采购订单' : '编辑采购订单'"
       :visible.sync="visible"
       width="700px"
       :before-close="handleClose"
@@ -77,6 +77,7 @@ export default {
   data () {
     return {
       visible: false,
+      mode: 'enter',
       form: {
         name: '',
         id: '',
@@ -112,8 +113,24 @@ export default {
     // })
   },
   methods: {
-    openDialog() {
+    openDialog(id) {
       this.visible = true
+      db.purchase.orderBy('id').toArray().then(val => {
+        // console.log(val);
+        if (id) {
+          this.mode = 'edit'
+          this.getDetail(id)
+        } else {
+          this.form.id = val[val.length - 1].id + 1
+        }
+      })
+    },
+    // 编辑详情
+    getDetail(id) {
+      db.purchase.where({ id }).toArray().then(val => {
+        this.form = val[0]
+        console.log(this.form);
+      })
     },
     handleClose(done) {
       this.$emit('on-exit')
@@ -139,7 +156,7 @@ export default {
           indent = indent && moment(this.form.indentData).format('YYYY/MM/DD HH:mm:ss')
           arrive = arrive && moment(this.form.arriveData,).format('YYYY/MM/DD HH:mm:ss')
           // ++id, money, invoiceNum, indentData, arriveData, notes
-          const id = await db.purchase.add({
+          let params = {
             name: this.form.name,
             supplier: this.form.supplier,
             buyer: this.form.buyer,
@@ -148,8 +165,13 @@ export default {
             indentData: indent,
             arriveData: arrive,
             notes: this.form.notes,
-          })
-          console.log(id);
+          }
+          if (this.mode === 'enter') {
+            const id = await db.purchase.add(params)
+            // console.log(id);
+          } else {
+            await db.purchase.update(this.form.id, params)
+          }
         } catch (err) {
           console.log('加入失败！' + err);
         }

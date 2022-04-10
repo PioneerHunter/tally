@@ -31,20 +31,36 @@ const routes = [
     }
   },
   {
-    path: '/manageStorage',
-    name: 'manageStorage',
+    path: '/manage',
+    name: 'manage',
     component: Main,
-    redirect: '/manage',
+    redirect: '/inManage',
     meta: {
       requiresAuth: true,
     },
     children: [
       {
-        path: '/manage',
-        name: 'manage',
-        component: () => import('../views/storageManage/manage.vue'),
+        path: '/inManage',
+        name: 'inManage',
+        component: () => import('../views/manage/inManage.vue'),
         meta: {
-          title: '进销存'
+          title: '进货订单'
+        }
+      },
+      {
+        path: '/storageManage',
+        name: 'storageManage',
+        component: () => import('../views/manage/storageManage.vue'),
+        meta: {
+          title: '库存'
+        }
+      },
+      {
+        path: '/outManage',
+        name: 'outManage',
+        component: () => import('../views/manage/outManage.vue'),
+        meta: {
+          title: '出库'
         }
       },
     ]
