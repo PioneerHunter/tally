@@ -45,23 +45,23 @@
           <el-form-item label="总金额" prop="money">
             <el-input v-model.number="form.money" type="number"></el-input>
           </el-form-item>
-          <div>
+          <el-form-item label="数量" prop="num">
+            <el-input v-model.number="form.num" type="number"></el-input>
+          </el-form-item>
             <el-form-item label="备注">
               <el-input
                 v-model="form.notes"
                 type="textarea"
                 maxlength="500"
-                style="width:505px"
-                show-word-limit
+                style="width:209px;"
                 :autosize="{ minRows: 2, maxRows: 3}"
                 placeholder="请输入内容"
               ></el-input>
             </el-form-item>
-          </div>
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="storage">确 定</el-button>
+        <el-button type="primary" @click="ok">确 定</el-button>
       </span>
   </el-dialog>
   </div>
@@ -87,6 +87,7 @@ export default {
         invoiceNum: '',
         buyer: '',
         money: '',
+        num: '',
         notes: '',
       },
       rules: {
@@ -99,20 +100,36 @@ export default {
         invoiceNum: [
           { required: true, message: '请输入发票号', trigger: 'change' }
         ],
+        num: [
+          { required: true, message: '数量必须且为数字', trigger: 'change' }
+        ],
       },
     }
   },
   create () {
   },
   mounted () {
+    db.storage.orderBy('id').offset(0).toArray().then((val) => {
+      console.log(val);
+    })
     // db.purchase.orderBy('id').offset(5).limit(5).toArray().then((val) => {
     //   console.log(val);
     // })
     // db.purchase.orderBy('id').offset(2).limit(2).toArray().then((val) => {
     //   console.log(val);
     // })
+    // db.purchase.where({ name: 'dsaf' }).toArray().then(goods => {
+    //   goods.forEach(val => {
+    //     console.log(val.money);
+    //   })
+    // })
+    // console.log(db.purchase.get({ name: 'dasfdsafdsafsa' }));
   },
   methods: {
+    async beiyong() {
+      const is = await db.purchase.where({ name: 'dsaf' }).toArray()
+      console.log(is[0]);
+    },
     openDialog(id) {
       this.visible = true
       db.purchase.orderBy('id').toArray().then(val => {
@@ -129,7 +146,7 @@ export default {
     getDetail(id) {
       db.purchase.where({ id }).toArray().then(val => {
         this.form = val[0]
-        console.log(this.form);
+        // console.log(this.form);
       })
     },
     handleClose(done) {
@@ -141,7 +158,7 @@ export default {
       //   })
       //   .catch(_ => {});
     },
-    async storage() {
+    async ok() {
       let valid
       this.$refs['form'].validate(val => {
         if (val) valid = true
@@ -164,17 +181,54 @@ export default {
             invoiceNum: this.form.invoiceNum,
             indentData: indent,
             arriveData: arrive,
+            num: this.form.num,
             notes: this.form.notes,
           }
           if (this.mode === 'enter') {
             const id = await db.purchase.add(params)
-            // console.log(id);
+            // db.purchase.add(params)
+            // console.log(id, 1);
+            // setTimeout(() => {
+            //   this.storage()
+            // }, 0)
+            console.log('shi wu');
+            // await db.transaction('rw', [db.purchase], async () => {
+            //   await db.purchase.add(params)
+            //   await this.storage();
+            // });
+            await this.storage()
           } else {
             await db.purchase.update(this.form.id, params)
           }
         } catch (err) {
           console.log('加入失败！' + err);
         }
+      }
+    },
+    async storage() {
+      let storageParams = {
+        name: this.form.name,
+        num: Number(this.form.num),
+      }
+      if (this.mode === 'enter') {
+        console.log(147);
+        const isExist = true
+        // const isExist = await db.storage.where({ name: this.form.name }).toArray()
+        console.log(isExist);
+        let money = Number(this.form.money)
+        let num = Number(this.form.num)
+        try {
+          if (isExist.length) {
+            storageParams.money = (money + isExist[0].money * isExist[0].num) / (num + isExist[0].num)
+            await db.storage.add(storageParams)
+          } else {
+            storageParams.money = money / num
+            await db.storage.add(storageParams)
+          }
+        } catch (e) {
+          console.log('jia ru shi bai' + e);
+        }
+        // console.log(await db.storage.where({ name: this.form.name }.toArray()), 123);
       }
     },
   }

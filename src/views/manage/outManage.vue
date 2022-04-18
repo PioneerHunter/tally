@@ -1,5 +1,7 @@
 <template>
-  <div>出库</div>
+  <div class="page out-manage">
+    <h3>出库订单</h3>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div class="page in-manage">
-    <h3>进销存管理</h3>
+    <h3>进货订单</h3>
     <button @click="openDialog">进货</button>
     <div class="list">
       <el-table
@@ -23,6 +23,7 @@
           prop="money"
           label="总金额">
         </el-table-column>
+        <el-table-column prop="num" label="数量"></el-table-column>
         <el-table-column
           prop="invoiceNum"
           label="发票号">
@@ -59,6 +60,7 @@
 <script>
 import PurchaseDialog from './components/purchase.vue'
 import { db } from '@/data/db'
+import { getDbList } from '@/utils/dbMethod'
 
 export default {
   name: 'Manage',
@@ -82,21 +84,20 @@ export default {
     db.purchase.orderBy('id').offset(0).toArray().then((val) => {
       this.page.total = val.length
     })
-    db.purchase.orderBy('id').offset(0).limit(this.page.pageSize).toArray().then((val) => {
-      console.log(val.length);
+    getDbList('purchase', 'id', this.page.pageSize).then(val => {
       this.tableData = val
     })
   },
   methods: {
     openDialog(row) {
-      console.log(row.id);
+      // console.log(row.id);
       this.$refs.PurchaseDialog.openDialog(row.id)
     },
     refresh() {
       this.reload()
     },
     deletePurchase(row) {
-      console.log();
+      // console.log();
       db.purchase.where({ id: row.id }).delete()
       this.refresh()
       // db.purchase.where({ id: row.id }).then((val) => {
@@ -105,17 +106,15 @@ export default {
     },
     handleSizeChange(val) {
       this.page.pageSize = val
-      db.purchase.orderBy('id').offset(0).limit(this.page.pageSize).toArray().then((val) => {
-        console.log(val.length);
+      getDbList('purchase', 'id', this.page.pageSize).then(val => {
         this.tableData = val
       })
       // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       let currentNum = (this.page.pageNum - 1) * this.page.pageSize
-      db.purchase.orderBy('id').offset(currentNum).limit(this.page.pageSize).toArray().then((value) => {
-        console.log(this.page.pageNum);
-        this.tableData = value
+      getDbList('purchase', 'id', this.page.pageSize, currentNum).then(val => {
+        this.tableData = val
       })
       // console.log(`当前页: ${val}`);
     }
