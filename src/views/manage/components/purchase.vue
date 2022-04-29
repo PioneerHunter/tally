@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="订单日期">
             <el-date-picker
-              v-model="form.indentData"
+              v-model="form.indentDate"
               type="datetime"
               placeholder="选择日期">
             </el-date-picker>
@@ -31,7 +31,7 @@
           </el-form-item>
           <el-form-item label="到货日期">
             <el-date-picker
-              v-model="form.arriveData"
+              v-model="form.arriveDate"
               type="datetime"
               placeholder="选择日期">
             </el-date-picker>
@@ -81,15 +81,16 @@ export default {
       form: {
         name: '',
         id: '',
-        indentData: '',
+        indentDate: '',
         supplier: '',
-        arriveData: '',
+        arriveDate: '',
         invoiceNum: '',
         buyer: '',
         money: '',
         num: '',
         notes: '',
       },
+      oldForm: {},
       rules: {
         name: [
           { required: true, message: '请输入商品名', trigger: 'change' }
@@ -106,11 +107,16 @@ export default {
       },
     }
   },
+  watch: {
+    'form.name'() {
+      console.log(this.form, this.oldForm, 123);
+    },
+  },
   create () {
   },
   mounted () {
     db.storage.orderBy('id').offset(0).toArray().then((val) => {
-      console.log(val);
+      // console.log(val);
     })
     // db.purchase.orderBy('id').offset(5).limit(5).toArray().then((val) => {
     //   console.log(val);
@@ -145,7 +151,8 @@ export default {
     // 编辑详情
     getDetail(id) {
       db.purchase.where({ id }).toArray().then(val => {
-        this.form = val[0]
+        this.form = { ...val[0] }
+        this.oldForm = { ...val[0] }
         // console.log(this.form);
       })
     },
@@ -165,70 +172,80 @@ export default {
       })
       if (valid) {
         this.visible = false
-        this.$emit('on-exit')
         try {
           // 时间格式化
-          let indent = this.form.indentData
-          let arrive = this.form.arriveData
-          indent = indent && moment(this.form.indentData).format('YYYY/MM/DD HH:mm:ss')
-          arrive = arrive && moment(this.form.arriveData,).format('YYYY/MM/DD HH:mm:ss')
-          // ++id, money, invoiceNum, indentData, arriveData, notes
+          let indent = this.form.indentDate
+          let arrive = this.form.arriveDate
+          indent = indent && moment(this.form.indentDate).format('YYYY/MM/DD HH:mm:ss')
+          arrive = arrive && moment(this.form.arriveDate,).format('YYYY/MM/DD HH:mm:ss')
+          // ++id, money, invoiceNum, indentDate, arriveDate, notes
           let params = {
             name: this.form.name,
             supplier: this.form.supplier,
             buyer: this.form.buyer,
             money: this.form.money,
             invoiceNum: this.form.invoiceNum,
-            indentData: indent,
-            arriveData: arrive,
+            indentDate: indent,
+            arriveDate: arrive,
             num: this.form.num,
             notes: this.form.notes,
           }
           if (this.mode === 'enter') {
             const id = await db.purchase.add(params)
-            // db.purchase.add(params)
-            // console.log(id, 1);
-            // setTimeout(() => {
-            //   this.storage()
-            // }, 0)
-            console.log('shi wu');
-            // await db.transaction('rw', [db.purchase], async () => {
-            //   await db.purchase.add(params)
-            //   await this.storage();
-            // });
-            await this.storage()
+            await this.enterStorage()
           } else {
+            await this.editStorage(this.oldForm, true)
             await db.purchase.update(this.form.id, params)
           }
+          this.$emit('on-exit')
         } catch (err) {
           console.log('加入失败！' + err);
         }
       }
     },
-    async storage() {
+    async enterStorage() {
+      // isExist：仓库中是否存在当前待加入商品
+      const isExist = await db.storage.where({ name: this.form.name }).toArray()
+      console.log(isExist, 'isExist');
+
+      let money = Number(this.form.money)
+      let num = Number(this.form.num)
       let storageParams = {
         name: this.form.name,
-        num: Number(this.form.num),
+        num: num,
       }
-      if (this.mode === 'enter') {
-        console.log(147);
-        const isExist = true
-        // const isExist = await db.storage.where({ name: this.form.name }).toArray()
-        console.log(isExist);
-        let money = Number(this.form.money)
-        let num = Number(this.form.num)
-        try {
-          if (isExist.length) {
-            storageParams.money = (money + isExist[0].money * isExist[0].num) / (num + isExist[0].num)
-            await db.storage.add(storageParams)
-          } else {
-            storageParams.money = money / num
-            await db.storage.add(storageParams)
-          }
-        } catch (e) {
-          console.log('jia ru shi bai' + e);
+      try {
+        if (isExist.length) {
+          storageParams.money = (money + isExist[0].money * isExist[0].num) / (num + isExist[0].num)
+          storageParams.num += Number(isExist[0].num)
+          await db.storage.update(isExist[0].id, storageParams)
+        } else {
+          storageParams.money = money / num
+          await db.storage.add(storageParams)
         }
-        // console.log(await db.storage.where({ name: this.form.name }.toArray()), 123);
+      } catch (e) {
+        console.log('录入失败' + e);
+      }
+    },
+    async editStorage(form, isEnter) {
+      // oldPurchase：未修改前的订单内容，oldStorage：未修改前的仓库内容
+      const oldPurchase = await db.purchase.where({ id: form.id }).toArray()
+      const oldStorage = await db.storage.where({ name: form.name }).toArray()
+      let storageParams = {
+        name: oldStorage[0].name,
+        num: 0,
+      }
+      try {
+        storageParams.num = oldStorage[0].num - oldPurchase[0].num
+        if (storageParams.num) {
+          storageParams.money = ((oldStorage[0].num * oldStorage[0].money) - oldPurchase[0].money) / storageParams.num
+          await db.storage.update(oldStorage[0].id, storageParams)
+        } else {
+          await db.storage.where({ id: oldStorage[0].id }).delete()
+        }
+        if (isEnter) await this.enterStorage()
+      } catch (e) {
+        console.log('编辑失败' + e);
       }
     },
   }

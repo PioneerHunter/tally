@@ -28,8 +28,8 @@
           prop="invoiceNum"
           label="发票号">
         </el-table-column>
-        <el-table-column prop="indentData" label="订单日期"></el-table-column>
-        <el-table-column prop="arriveData" label="到货日期"></el-table-column>
+        <el-table-column prop="indentDate" label="订单日期"></el-table-column>
+        <el-table-column prop="arriveDate" label="到货日期"></el-table-column>
         <el-table-column prop="notes" label="备注"></el-table-column>
         <el-table-column
           fixed="right"
@@ -61,6 +61,7 @@
 import PurchaseDialog from './components/purchase.vue'
 import { db } from '@/data/db'
 import { getDbList } from '@/utils/dbMethod'
+import { login } from '@/api/api'
 
 export default {
   name: 'Manage',
@@ -96,9 +97,14 @@ export default {
     refresh() {
       this.reload()
     },
-    deletePurchase(row) {
-      // console.log();
-      db.purchase.where({ id: row.id }).delete()
+    async deletePurchase(row) {
+      try {
+        const [ oldPurchase ] = await db.purchase.where({ id: row.id }).toArray()
+        await this.$refs.PurchaseDialog.editStorage(oldPurchase)
+        await db.purchase.where({ id: row.id }).delete()
+      } catch (e) {
+        console.log('删除失败' + e);
+      }
       this.refresh()
       // db.purchase.where({ id: row.id }).then((val) => {
       //   console.log(val);
