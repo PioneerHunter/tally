@@ -1,7 +1,7 @@
 <template>
   <div class="page in-manage">
-    <h3>进货订单</h3>
-    <button @click="openDialog">进货</button>
+    <h3>采购订单</h3>
+    <button @click="openDialog">添加采购单</button>
     <div class="list">
       <el-table
         :data="tableData"
@@ -61,10 +61,9 @@
 import PurchaseDialog from './components/purchase.vue'
 import { db } from '@/data/db'
 import { getDbList } from '@/utils/dbMethod'
-import { login } from '@/api/api'
 
 export default {
-  name: 'Manage',
+  name: 'inManage',
   inject: ['reload'],
   components: {
     PurchaseDialog,
@@ -79,15 +78,15 @@ export default {
       },
     }
   },
-  create () {
-  },
-  mounted () {
-    db.purchase.orderBy('id').offset(0).toArray().then((val) => {
+  created () {
+    db.purchase.orderBy('id').toArray().then((val) => {
       this.page.total = val.length
     })
     getDbList('purchase', 'id', this.page.pageSize).then(val => {
       this.tableData = val
     })
+  },
+  mounted () {
   },
   methods: {
     openDialog(row) {

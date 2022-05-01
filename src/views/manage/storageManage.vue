@@ -21,23 +21,23 @@
           align="center"
           label="单价/元">
         </el-table-column>
-        <!-- <el-table-column
-          fixed="right"
-          label="操作"
-          align="center"
-          width="100">
-          <template slot-scope="scope">
-            <el-button @click="openDialog(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="deletePurchase(scope.row)" type="text" size="small">删除</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
     </div>
+
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      layout="total, sizes, prev, pager, next, jumper"
+      :page-sizes="[10, 20, 40]"
+      :current-page.sync="page.pageNum"
+      :page-size="page.pageSize"
+      :total="page.total">
+    </el-pagination>
   </div>
 </template>
 
 <script>
-// import { db } from '@/data/db'
+import { db } from '@/data/db'
 import { getDbList } from '@/utils/dbMethod'
 
 export default {
@@ -53,15 +53,30 @@ export default {
       },
     }
   },
-  create () {},
-  mounted () {
+  created () {
+    db.storage.orderBy('id').toArray().then((val) => {
+      this.page.total = val.length
+    })
     getDbList('storage', 'id', this.page.pageSize).then(val => {
       this.tableData = val
     })
-    // console.log(getList('storage', 'id', this.page.pageSize));
-    // this.tableData = getList('storage', 'id', this.page.pageSize)
   },
-  methods: {}
+  mounted () {
+  },
+  methods: {
+    handleSizeChange(val) {
+      this.page.pageSize = val
+      getDbList('storage', 'id', this.page.pageSize).then(val => {
+        this.tableData = val
+      })
+    },
+    handleCurrentChange(val) {
+      let currentNum = (this.page.pageNum - 1) * this.page.pageSize
+      getDbList('storage', 'id', this.page.pageSize, currentNum).then(val => {
+        this.tableData = val
+      })
+    }
+  }
 }
 </script>
 

@@ -63,13 +63,14 @@
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="ok">确 定</el-button>
       </span>
-  </el-dialog>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { db } from '@/data/db'
-import moment from 'moment'
+import { search } from '@/utils/dbMethod'
+import { timeFormat } from '@/utils/public'
 
 export default {
   name: 'Purchase',
@@ -107,17 +108,12 @@ export default {
       },
     }
   },
-  watch: {
-    'form.name'() {
-      console.log(this.form, this.oldForm, 123);
-    },
-  },
-  create () {
+  created () {
   },
   mounted () {
-    db.storage.orderBy('id').offset(0).toArray().then((val) => {
+    // db.storage.orderBy('id').offset(0).toArray().then((val) => {
       // console.log(val);
-    })
+    // })
     // db.purchase.orderBy('id').offset(5).limit(5).toArray().then((val) => {
     //   console.log(val);
     // })
@@ -134,27 +130,27 @@ export default {
   methods: {
     async beiyong() {
       const is = await db.purchase.where({ name: 'dsaf' }).toArray()
-      console.log(is[0]);
     },
     openDialog(id) {
       this.visible = true
       db.purchase.orderBy('id').toArray().then(val => {
-        // console.log(val);
         if (id) {
           this.mode = 'edit'
           this.getDetail(id)
         } else {
+          if (!val.length) {
+            this.form.id = 1
+            return
+          }
           this.form.id = val[val.length - 1].id + 1
         }
       })
     },
-    // 编辑详情
-    getDetail(id) {
-      db.purchase.where({ id }).toArray().then(val => {
-        this.form = { ...val[0] }
-        this.oldForm = { ...val[0] }
-        // console.log(this.form);
-      })
+    /** 获取编辑详情 */
+    async getDetail(id) {
+      const [ detail ] = await search('purchase', { id })
+      this.form = { ...detail }
+      this.oldForm = { ...detail }
     },
     handleClose(done) {
       this.$emit('on-exit')
@@ -172,27 +168,18 @@ export default {
       })
       if (valid) {
         this.visible = false
+        // 时间格式化
+        let indent = this.form.indentDate
+        let arrive = this.form.arriveDate
+        indent = indent && timeFormat(this.form.indentDate)
+        arrive = arrive && timeFormat(this.form.arriveDate)
+        let params = { ...this.form }
+        params.indentDate = indent
+        params.arriveDate = arrive
         try {
-          // 时间格式化
-          let indent = this.form.indentDate
-          let arrive = this.form.arriveDate
-          indent = indent && moment(this.form.indentDate).format('YYYY/MM/DD HH:mm:ss')
-          arrive = arrive && moment(this.form.arriveDate,).format('YYYY/MM/DD HH:mm:ss')
-          // ++id, money, invoiceNum, indentDate, arriveDate, notes
-          let params = {
-            name: this.form.name,
-            supplier: this.form.supplier,
-            buyer: this.form.buyer,
-            money: this.form.money,
-            invoiceNum: this.form.invoiceNum,
-            indentDate: indent,
-            arriveDate: arrive,
-            num: this.form.num,
-            notes: this.form.notes,
-          }
           if (this.mode === 'enter') {
-            const id = await db.purchase.add(params)
             await this.enterStorage()
+            await db.purchase.add(params)
           } else {
             await this.editStorage(this.oldForm, true)
             await db.purchase.update(this.form.id, params)
@@ -206,7 +193,6 @@ export default {
     async enterStorage() {
       // isExist：仓库中是否存在当前待加入商品
       const isExist = await db.storage.where({ name: this.form.name }).toArray()
-      console.log(isExist, 'isExist');
 
       let money = Number(this.form.money)
       let num = Number(this.form.num)
