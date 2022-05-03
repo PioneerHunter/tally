@@ -76,7 +76,7 @@ import { search, deleteData } from '@/utils/dbMethod'
 import { timeFormat } from '@/utils/public'
 
 export default {
-  name: '',
+  name: 'Sales',
   components: {},
   data () {
     return {

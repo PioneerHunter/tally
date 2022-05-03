@@ -59,7 +59,7 @@
 
 <script>
 import { db } from '@/data/db'
-import SalesDialog from './components/sales.vue'
+import SalesDialog from '../../components/manage/sales.vue'
 import { getDbList, search } from '@/utils/dbMethod'
 
 export default {

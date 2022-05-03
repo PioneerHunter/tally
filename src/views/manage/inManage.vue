@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import PurchaseDialog from './components/purchase.vue'
+import PurchaseDialog from '../../components/manage/purchase.vue'
 import { db } from '@/data/db'
 import { getDbList } from '@/utils/dbMethod'
 

@@ -74,7 +74,7 @@
 import router from '@/router/index'
 
 export default {
-  name: 'Main',
+  name: 'SiderBar',
   components: {},
   data () {
     return {

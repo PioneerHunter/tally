@@ -41,7 +41,7 @@ import { db } from '@/data/db'
 import { getDbList } from '@/utils/dbMethod'
 
 export default {
-  name: '',
+  name: 'StorageManage',
   components: {},
   data () {
     return {

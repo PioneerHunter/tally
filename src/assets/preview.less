@@ -1,0 +1,166 @@
+.invocie-main {
+  width: 920px;
+  margin: 0 auto;
+  .invoice-body {
+    border: 1px solid grey;
+  }
+}
+
+header {
+  margin-bottom: 10px;
+  .title {
+    text-align: center;
+    font-size: 32px;
+    color: blue;
+    font-family: 'kaiti';
+    margin: 5px 12px;
+    hr {
+      width: 320px;
+      height: 3px;
+      border-top: 1px solid grey;
+      border-bottom: 1px solid grey;
+      border-left-width: 0;
+      border-right-width: 0;
+    }
+  }
+  .basic-info {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.purchase-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 96px;
+  border-bottom: 1px solid grey;
+  .buyer {
+    width: 20px;
+    border-right: 1px solid grey;
+    padding: 0 10px;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .buyer-info {
+    width: 500px;
+    label {
+      width: 120px;
+      text-align: right;
+      display: inline-block;
+    }
+    input {
+      width: 300px;
+    }
+  }
+  .password {
+    width: 20px;
+    padding: 0 10px;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.goods-table {
+  height: 210px;
+  display: flex;
+  .table-item {
+    border-right: 1px solid grey;
+    .table-head {
+      text-align: center;
+    }
+  }
+  .table-item:last-child {
+    border-right-width: 0;
+  }
+}
+
+.total-tax {
+  display: flex;
+  text-align: center;
+  div {
+    border-right: 1px solid grey;
+  }
+  div:last-child {
+    border-right-width: 0;
+  }
+}
+
+.total {
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  .post-tax {
+    width: 23.8%;
+    text-align: center;
+    border-right: 1px solid grey;
+  }
+  .lower-case {
+    width: 74%;
+    display: flex;
+    align-items: center;
+    div:first-child {
+      width: 60%;
+    }
+    div:last-child {
+      width: 30%;
+    }
+  }
+}
+
+.sales-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 96px;
+  .seller {
+    width: 20px;
+    border-right: 1px solid grey;
+    padding: 0 10px;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .seller-info {
+    width: 500px;
+  }
+  .notes {
+    width: 20px;
+    padding: 0 10px;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  div {
+    flex: 1;
+  }
+}
+
+// 页面公共样式
+.blue {
+  color: blue;
+}
+
+.align-right {
+  width: 120px;
+  text-align: right;
+  display: inline-block;
+}
