@@ -89,6 +89,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+  text-align: center;
   .login-txt {
     padding: 15px 0;
   }

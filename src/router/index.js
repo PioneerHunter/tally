@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import Main from '../components/main/main.vue'
 
 Vue.use(VueRouter)
@@ -10,25 +9,6 @@ const routes = [
     path: '/',
     name: 'login',
     component: () => import('../views/Login.vue')
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomeView,
-    meta: {
-      requiresAuth: true,
-    }
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-    meta: {
-      requiresAuth: true,
-    }
   },
   {
     path: '/manage',
@@ -103,6 +83,30 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: Main,
+    redirect: '/set',
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
+      {
+        path: '/set',
+        name: 'set',
+        component: () => import('../views/settings/index.vue'),
+        meta: {
+          title: '设置'
+        }
+      },
+    ]
+  },
+  // {
+  //   path: '/settings',
+  //   name: 'settings',
+  //   component: () => import('../views/settings/index.vue')
+  // },
 ]
 
 const router = new VueRouter({

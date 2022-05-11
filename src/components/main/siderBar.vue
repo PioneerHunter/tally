@@ -30,43 +30,11 @@
         </a>
       </li>
       <li class="menu-item">
-        <a @click="() => { $router.push('outManage') }">
+        <a @click="() => { $router.push('set') }">
           <i class="icon el-icon-setting" aria-hidden="true"></i>
         </a>
       </li> 
     </ul>
-    <!-- <div class="sider-icon" @click="() => { $router.push('inManage') }">
-      <el-popover
-        placement="right"
-        width="30"
-        trigger="hover">
-        <div @click="() => { $router.push('inManage') }">进货订单</div>
-        <div @click="() => { $router.push('storageManage') }">库存</div>
-        <div @click="() => { $router.push('outManage') }">出库</div>
-        <i class="icon el-icon-edit-outline" slot="reference"></i>
-      </el-popover>
-    </div>
-    <div class="sider-icon" @click="() => { $router.push('invoice') }">
-      <el-tooltip class="item" effect="light" content="发票" placement="right">
-        <i class="icon el-icon-edit-outline"></i>
-      </el-tooltip>
-    </div>
-    <div class="sider-icon" @click="() => { $router.push('reportForms') }">
-      <el-tooltip class="item" effect="light" content="报表" placement="right">
-        <i class="icon el-icon-edit-outline"></i>
-      </el-tooltip>
-    </div>
-    <div class="sider-icon">
-      <el-tooltip class="item" effect="light" content="管理" placement="right">
-        <i class="icon el-icon-setting"></i>
-      </el-tooltip>
-    </div>
-    <div class="sider-icon" @click="() => { $router.push('/') }">
-      <el-tooltip class="item" effect="light" content="收起" placement="right">
-        <i class="icon el-icon-s-fold"></i>
-        <i class="icon el-icon-s-unfold"></i>
-      </el-tooltip>
-    </div> -->
   </div>
 </template>
 
