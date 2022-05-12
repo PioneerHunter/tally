@@ -245,7 +245,8 @@ export default {
     height: 40px;
     line-height: 40px;
     margin: 10px 0;
-    background-color: #7E57C2;
+    // background-color: #7E57C2;
+    background-color: rgb(97, 202, 74);
     opacity: 0.8;
     cursor: pointer;
     border-radius: 15px;

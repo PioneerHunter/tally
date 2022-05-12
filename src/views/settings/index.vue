@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>设置</h3>
-    <div></div>
+    <div @click="() => { $router.push('/') }">退出</div>
   </div>
 </template>
 

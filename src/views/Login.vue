@@ -99,6 +99,7 @@ export default {
     height: 280px;
     background-image: linear-gradient(#e66465, #9198e5);
     border-radius: 10px;
+    box-shadow: 0 0 15px 15px #888888;
     .demo-ruleForm {
       padding-right: 80px;
     }
