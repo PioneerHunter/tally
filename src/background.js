@@ -20,7 +20,12 @@ async function createWindow() {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      // 使得渲染进程可以调用node模块，暂时没用
+      // webPreferences: { 
+      //   nodeIntegration: true,
+      //   contextIsolation: false,
+      // },
     }
   })
 

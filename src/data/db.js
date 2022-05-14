@@ -15,3 +15,8 @@ db.version(3).stores({
     sales: '++id, name, customer, salesTime, salesMan',
     person: '++id, position',
 })
+
+db.version(4).stores({
+    salary: '++id, name',
+    user: '++id, name, isAdmin',
+})
