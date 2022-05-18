@@ -18,6 +18,15 @@ export const addData = async (name, params) => {
   }
 }
 
+// 更新数据
+export const updateData = async (name, id, params) => {
+  try {
+    return await db[name].update(id, params)
+  } catch (e) {
+    console.log('更新数据失败' + e);
+  }
+}
+
 // 删除对应 id 数据
 export const deleteData = async (name, id) => {
   try {

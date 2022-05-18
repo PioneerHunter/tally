@@ -46,6 +46,25 @@ const routes = [
     ]
   },
   {
+    path: '/salary',
+    name: 'salary',
+    component: Main,
+    redirect: '/salaryManage',
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
+      {
+        path: '/salaryManage',
+        name: 'salaryManage',
+        component: () => import('../views/salary/index.vue'),
+        meta: {
+          title: '工资'
+        }
+      },
+    ]
+  },
+  {
     path: '/invoiceManage',
     name: 'invoiceManage',
     component: Main,
@@ -102,11 +121,6 @@ const routes = [
       },
     ]
   },
-  // {
-  //   path: '/settings',
-  //   name: 'settings',
-  //   component: () => import('../views/settings/index.vue')
-  // },
 ]
 
 const router = new VueRouter({

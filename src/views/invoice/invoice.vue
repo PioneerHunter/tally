@@ -1,5 +1,5 @@
 <template>
-  <div class="invoice center">
+  <div class="invoice">
     <section class="top-bar flex">
       <div>
         <el-cascader
@@ -246,6 +246,7 @@ export default {
     line-height: 40px;
     margin: 10px 0;
     // background-color: #7E57C2;
+    text-align: center;
     background-color: rgb(97, 202, 74);
     opacity: 0.8;
     cursor: pointer;

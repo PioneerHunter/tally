@@ -1,26 +1,5 @@
 <template>
   <div class="page-login">
-    <!-- <div class="login">
-      <div class="login-txt">{{ isRegister ? "登录" : "注册" }}</div>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            v-if="isRegister"
-            type="primary"
-            @click="login('ruleForm')"
-            >登录</el-button>
-          <el-button v-else type="primary" @click="register">注册</el-button>
-          <el-button @click="resetForm('ruleForm')">重写</el-button>
-        </el-form-item>
-      </el-form>
-      <div v-show="isRegister" class="register" @click="isRegister = !isRegister">注册</div>
-    </div> -->
     <div class="back-photo"></div>
     <div class="container">
       <div class="box login">
@@ -117,7 +96,7 @@ export default {
       if (!await this.validateLogin()) return
       let storage = sessionStorage
       storage.setItem("loginState", 2)
-      this.$router.push('settings')
+      this.$router.push('salary')
       this.$message.success('登录成功！')
       // let params = {
       //   username: this.loginForm.name,
@@ -186,28 +165,4 @@ export default {
 
 <style lang="less" scoped>
 @import './login.css';
-
-.page-lo {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // text-align: center;
-  .login-txt {
-    padding: 15px 0;
-  }
-  .login {
-    transform: translate(-50%, -50%);
-    width: 400px;
-    height: 280px;
-    background-image: linear-gradient(#e66465, #9198e5);
-    border-radius: 10px;
-    box-shadow: 0 0 15px 15px #888888;
-    .demo-ruleForm {
-      padding-right: 80px;
-    }
-    .register {
-      cursor: pointer;
-    }
-  }
-}
 </style>
