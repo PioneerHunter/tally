@@ -8,7 +8,7 @@
       <div class="invoice-main">
         <header>
           <div class="title">
-            {{ title }}
+            {{ form.province + title }}
             <hr>
           </div>
           <div class="basic-info">

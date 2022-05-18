@@ -2,112 +2,112 @@
   <div class="invoice">
     <section class="top-bar flex">
       <div>
-        <el-cascader
-          :options="options"
-          :show-all-levels="false"
-          placeholder="请选择开票地区"
-        ></el-cascader>
+        <el-select v-model="form.province" placeholder="请选择开票地区">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </div>
-      <button class="preview-btn" @click="preview">
+      <button class="preview-btn btn" @click="preview">
         <i class="el-icon-view"></i>
         预览
       </button>
-      <button class="print-btn" @click="preview">
+    </section>
+
+    <el-steps :active="active" align-center>
+      <el-step title="发票基本信息"></el-step>
+      <el-step title="购买方"></el-step>
+      <el-step title="货物"></el-step>
+      <el-step title="销售方"></el-step>
+      <el-step title="底部栏信息"></el-step>
+    </el-steps>
+
+    <section v-show="active === 0" class="step">
+      <div class="flex">
+        <div>
+          发票代码：<input v-model="form.code" />
+        </div>
+        <div>
+          发票号码：<input v-model="form.number" />
+        </div>
+      </div>
+    </section>
+
+    <section v-show="active === 1" class="step">
+      <div class="flex">
+        <div>
+          名称：<input v-model="form.buyerName" />
+        </div>
+        <div>
+          纳税人识别号：<input v-model="form.buyerTaxNum" />
+        </div>
+        <div>
+          地址、电话：<input v-model="form.buyerAddress" />
+        </div>
+        <div>
+          开户行及账号：<input v-model="form.buyerBank" />
+        </div>
+      </div>
+    </section>
+
+    <section v-show="active === 2" class="step">
+      <div class="center">
+        <ve-table
+          rowKeyFieldName="rowKey"
+          :columns="columns"
+          :table-data="tableData"
+          :editOption="editOption"
+          border-y
+        />
+        <button class="btn" @click="addTable">增加一行</button>
+      </div>
+    </section>
+
+    <section v-show="active === 3" class="step">
+      <div class="flex">
+        <div>
+          名称：<input v-model="form.salesName" />
+        </div>
+        <div>
+          纳税人识别号：<input v-model="form.salesTaxNum" />
+        </div>
+        <div>
+          地址、电话：<input v-model="form.salesAddress" />
+        </div>
+        <div>
+          开户行及账号：<input v-model="form.salesBank" />
+        </div>
+        <div>
+          备注：<input v-model="form.notes" />
+        </div>
+      </div>
+    </section>
+
+    <section  v-show="active === 4" class="step">
+      <div class="flex">
+        <div>
+          收款人：<input v-model="form.payee" />
+        </div>
+        <div>
+          复核：<input v-model="form.review" />
+        </div>
+        <div>
+          开票人：<input v-model="form.drawer" />
+        </div>
+      </div>
+    </section>
+
+    <div class="center">
+      <button v-show="active !== 0" class="btn" @click="back">上一步</button>
+      <button v-show="active !== 4" class="btn" @click="next">下一步</button>
+      <button v-show="active === 4" class="print-btn btn" @click="print">
         <i class="el-icon-printer"></i>
         打印
       </button>
-    </section>
-
-    <section>
-      <div class="name" @click="show.basic = !show.basic">发票信息</div>
-      <transition name="slide-fade">
-        <div v-show="show.basic" class="number-info flex">
-          <div>
-            发票代码：<input v-model="form.code" />
-          </div>
-          <div>
-            发票号码：<input v-model="form.number" />
-          </div>
-        </div>
-      </transition>
-    </section>
-
-    <section class="buyer">
-      <div class="name" @click="show.buy = !show.buy">购买方信息</div>
-      <transition name="slide-fade">
-        <div v-show="show.buy" class="flex">
-          <div>
-            名称：<input v-model="form.buyerName" />
-          </div>
-          <div>
-            纳税人识别号：<input v-model="form.buyerTaxNum" />
-          </div>
-          <div>
-            地址、电话：<input v-model="form.buyerAddress" />
-          </div>
-          <div>
-            开户行及账号：<input v-model="form.buyerBank" />
-          </div>
-        </div>
-      </transition>
-    </section>
-
-    <section>
-      <div class="name" @click="show.goods = !show.goods">货物信息</div>
-      <transition name="slide-fade">
-        <div v-show="show.goods">
-          <ve-table
-            rowKeyFieldName="rowKey"
-            :columns="columns"
-            :table-data="tableData"
-            :editOption="editOption"
-            
-            border-y
-          />
-          <button @click="addTable">增加一行</button>
-        </div>
-      </transition>
-    </section>
-
-    <section>
-      <div class="name" @click="show.sales = !show.sales">销售方信息</div>
-      <transition name="slide-fade">
-        <div v-show="show.sales" class="flex">
-          <div>
-            名称：<input v-model="form.salesName" />
-          </div>
-          <div>
-            纳税人识别号：<input v-model="form.salesTaxNum" />
-          </div>
-          <div>
-            地址、电话：<input v-model="form.salesAddress" />
-          </div>
-          <div>
-            开户行及账号：<input v-model="form.salesBank" />
-          </div>
-          <div>
-            备注：<input v-model="form.notes" />
-          </div>
-        </div>
-      </transition>
-    </section>
-
-    <section>
-      <div class="name" @click="show.bottom = !show.bottom">底部信息</div>
-      <transition name="slide-fade">
-        <div v-show="show.bottom" class="flex">
-          <div>
-            收款人：<input v-model="form.payee" />
-          </div>
-          <div>
-            复核：<input v-model="form.review" />
-          </div>
-          <div>
-            开票人：<input v-model="form.drawer" />
-          </div>
-        </div>
-      </transition>
-    </section>
+    </div>
 
     <preview-dialog ref="PreviewDialog" :form="form" :tableData="tableData"></preview-dialog>
   </div>
@@ -115,13 +115,12 @@
 
 <script>
 import PreviewDialog from '@/components/preview-dialog.vue'
-import VDistpicker from 'v-distpicker' // 城市选择器
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Invoice',
   components: {
     PreviewDialog,
-    VDistpicker,
   },
   data () {
     return {
@@ -142,28 +141,7 @@ export default {
         review: '',
         drawer: '郭启缘',
       },
-      options: [{
-        value: 'zhinan',
-        label: '指南',
-        children: [{
-          value: 'shejiyuanze',
-          label: '设计原则',
-          children: [{
-            value: 'yizhi',
-            label: '一致'
-          }, {
-            value: 'fankui',
-            label: '反馈'
-          }]
-        }],
-      }],
-      show: {
-        basic: true,
-        buy: true,
-        goods: true,
-        sales: true,
-        bottom: true,
-      },
+      active: 0,
       rowKey: 3,
       columns: [
         { field: "name", key: "a", title: "货物或应税劳务、服务名称", align: "center", edit: true },
@@ -191,6 +169,9 @@ export default {
     date() {
       return timeFormat(new Date(), 1)
     },
+    ...mapGetters({
+      options: 'getProvince',
+    })
   },
   create () {},
   mounted () {},
@@ -201,22 +182,34 @@ export default {
     addTable() {
       this.tableData.push({ name: "", modal:"", units: "", number: "", price: "", money: "", taxRate: "", tax: "", rowKey: this.rowKey })
       this.rowKey++
-    }
+    },
+    back() {
+      if (this.active-- < 1) this.active = 0
+    },
+    next() {
+      if (this.active === 0 && !this.form.province) {
+        console.log(this.form.province);
+        this.$message.warning('请先选择开票地区')
+        // return
+      }
+      if (this.active++ > 3) this.active = 0;
+    },
+    print() {
+      this.$message.error('未安装打印机驱动！')
+    },
   }
 }
 </script>
 
 <style lang="less" scoped>
 .invoice {
+  max-width: 1100px;
+  margin: 0 auto;
   .top-bar {
-    margin-bottom: 50px;
-    .preview-btn {
-      // background-color: #4fc08d;
-      // border: 0;
-    }
+    justify-content: space-between;
   }
   section {
-    margin: 0 auto;
+    margin: 50px auto;
     width: 920px;
     .flex {
       flex-flow: wrap;
@@ -227,12 +220,13 @@ export default {
       }
     }
     input {
-      height: 30px;
-      width: 200px;
-      padding: 0 10px;
+      height: 40px;
+      width: 250px;
+      padding: 0 15px;
+      font-size: 16px;
       outline-style: none ;
       border: 1px solid #dcdfe6;
-      border-radius: 10px;
+      border-radius: 5px;
       box-shadow: 0 0 3px #888888;
       cursor: pointer;
       caret-color: #dcdfe6;
@@ -241,37 +235,24 @@ export default {
       box-shadow: 0 0 10px #888888;
     }
   }
-  .name {
-    height: 40px;
-    line-height: 40px;
-    margin: 10px 0;
-    // background-color: #7E57C2;
-    text-align: center;
-    background-color: rgb(97, 202, 74);
-    opacity: 0.8;
+  section:first-child {
+    margin-top: 0;
+    margin-bottom: 50px;
+  }
+  .btn {
+    margin-right: 10px;
+    padding: 10px;
+    color: white;
     cursor: pointer;
-    border-radius: 15px;
-    box-shadow: 0 0 15px #333232;
+    // background-color: #B39DDB;
+    background-color: #7E57C2;
+    border: 1px solid #B39DDB;
+    border-radius: 2px;
+    // border-color: rgb(194, 189, 189) #777 #777 rgb(194, 189, 189);
   }
-  .name:hover {
-    opacity: 1;
-    box-shadow: 0 0 10px 10px #888888;
+  .btn:hover {
+    background-color: #7E57C2;
+    opacity: 0.7;
   }
-  .number-info {
-    // background-color: rgb(219, 213, 213);
-  }
-}
-
-// vue 过度动画
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-{
-  transform: translateY(-10px);
-  opacity: 0;
 }
 </style>
