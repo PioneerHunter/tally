@@ -62,7 +62,7 @@
           :editOption="editOption"
           border-y
         />
-        <button class="btn" @click="addTable">增加一行</button>
+        <button class="btn add-btn" @click="addTable">增加一行</button>
       </div>
     </section>
 
@@ -234,25 +234,13 @@ export default {
     input:focus {
       box-shadow: 0 0 10px #888888;
     }
+    .add-btn {
+      margin-top: 20px;
+    }
   }
   section:first-child {
     margin-top: 0;
     margin-bottom: 50px;
-  }
-  .btn {
-    margin-right: 10px;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    // background-color: #B39DDB;
-    background-color: #7E57C2;
-    border: 1px solid #B39DDB;
-    border-radius: 2px;
-    // border-color: rgb(194, 189, 189) #777 #777 rgb(194, 189, 189);
-  }
-  .btn:hover {
-    background-color: #7E57C2;
-    opacity: 0.7;
   }
 }
 </style>

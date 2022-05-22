@@ -1,40 +1,29 @@
 <template>
   <!-- <div class="sider-bar"> -->
   <div class="sider-bar">
-    <input type="checkbox" class="menu-toggler" id="menu_toggler" checked>
-    <label for="menu_toggler"></label>
-    <ul>
-      <li class="menu-item">
-        <a @click="() => { $router.push('inManage') }">
-          <i class="icon el-icon-edit-outline" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a @click="() => { $router.push('storageManage') }">
-          <i class="icon el-icon-edit-outline" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a @click="() => { $router.push('outManage') }">
-          <i class="icon el-icon-edit-outline" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a @click="() => { $router.push('invoice') }">
-          <i class="icon el-icon-edit-outline" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a @click="() => { $router.push('reportForms') }">
-          <i class="icon el-icon-edit-outline" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a @click="() => { $router.push('set') }">
-          <i class="icon el-icon-setting" aria-hidden="true"></i>
-        </a>
-      </li> 
-    </ul>
+    <div v-show="!show" class="shrink"  @click="foldMenu">
+      <i class="icon el-icon-caret-right"></i><span>展开</span>
+    </div>
+    <div v-show="show" class="items">
+      <a class="item active"  @click="() => { $router.push('inManage') }">
+        <i class="icon el-icon-edit"></i><span>进销存</span>
+      </a>
+      <a class="item"  @click="() => { $router.push('salary') }">
+        <i class="icon el-icon-money"></i><span>工资</span>
+      </a>
+      <a class="item"  @click="() => { $router.push('invoice') }">
+        <i class="icon el-icon-s-check"></i><span>发票</span>
+      </a>
+      <a class="item"  @click="() => { $router.push('reportForms') }">
+        <i class="icon el-icon-s-data"></i><span>报表</span>
+      </a>
+      <a class="item"  @click="() => { $router.push('set') }">
+        <i class="icon el-icon-edit-outline"></i><span>设置</span>
+      </a>
+      <a class="item" @click="foldMenu">
+        <i class="icon el-icon-caret-left"></i><span>隐藏</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -47,6 +36,7 @@ export default {
   data () {
     return {
       router,
+      show: true,
     }
   },
   create () {
@@ -55,38 +45,61 @@ export default {
   mounted () {
     // console.log(router, 2);
   },
-  methods: {}
+  methods: {
+    foldMenu() {
+      this.show = !this.show
+    },
+  }
 }
 </script>
 
 <style lang='less' scoped>
-@import '@/assets/siderBar.css';
-// .sider-bar {
-//   z-index: 100;
-//   position: fixed;
-//   bottom: 120px;
-//   left: 120px;
-//   cursor: pointer;
-//   width: 40px;
-//   height: 40px;
-//   padding: 20px 10px;
-//   background-color: rgb(121, 41, 41);
-//   opacity: 0.5;
-//   border-radius: 5px;
-//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-//   .sider-icon {
-//     margin-top: 20px;
-//     cursor: pointer;
-//   }
-//   .icon {
-//     font-size: 30px;
-//   }
-// }
+// @import '@/assets/siderBar.css';
 .sider-bar {
   z-index: 100;
   position: fixed;
-  bottom: 160px;
-  left: 160px;
+  bottom: 5%;
+  // left: calc(50% - 150px);
+  left: 10%;
   cursor: pointer;
+  background-color: rgba(126, 87, 194, 0.5);
+  border-radius: 5px;
+  color: white;
+  .shrink {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .items {
+    display: flex;
+    opacity: 0.8;
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      width: 60px;
+      height: 60px;
+      text-decoration: none;
+      .icon {
+        transition: 0.5s;
+      }
+      span {
+        display: none;
+        // transition: 0.5s;
+      }
+    }
+    a:hover .icon {
+      transform: translateY(-35px);
+      opacity: 0;
+    }
+    a:hover span {
+      display: inline;
+    }
+  }
 }
 </style>

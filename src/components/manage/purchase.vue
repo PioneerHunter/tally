@@ -40,7 +40,14 @@
             <el-input v-model="form.invoiceNum"></el-input>
           </el-form-item>
           <el-form-item label="采购人员">
-            <el-input v-model="form.buyer"></el-input>
+            <el-select v-model="form.buyer" filterable placeholder="支持搜索">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="总金额" prop="money">
             <el-input v-model.number="form.money" type="number"></el-input>
@@ -61,7 +68,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="ok">确 定</el-button>
+        <button class="btn" type="primary" @click="ok">确 定</button>
       </span>
     </el-dialog>
   </div>
@@ -69,7 +76,7 @@
 
 <script>
 import { db } from '@/data/db'
-import { search } from '@/utils/dbMethod'
+import { search, getData } from '@/utils/dbMethod'
 import { timeFormat } from '@/utils/public'
 
 export default {
@@ -92,6 +99,7 @@ export default {
         notes: '',
       },
       oldForm: {},
+      options: [],
       rules: {
         name: [
           { required: true, message: '请输入商品名', trigger: 'change' }
@@ -145,6 +153,13 @@ export default {
           this.form.id = val[val.length - 1].id + 1
         }
       })
+      this.getStaffs()
+    },
+    /** 获取员工列表 */
+    async getStaffs() {
+      console.log(1);
+      let staff = await getData('salary', 'id')
+      this.options = staff.map(ele => ({ value: ele.name, label: ele.name }))
     },
     /** 获取编辑详情 */
     async getDetail(id) {
@@ -241,7 +256,8 @@ export default {
 <style lang='less' scoped>
 .purcahse-dialog {
   .form-list {
-    .el-date-editor {
+    .el-date-editor,
+    .el-select {
       width: 207px;
     }
   }

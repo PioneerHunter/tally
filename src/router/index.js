@@ -14,35 +14,46 @@ const routes = [
     path: '/manage',
     name: 'manage',
     component: Main,
-    redirect: '/inManage',
+    redirect: '/index',
     meta: {
       requiresAuth: true,
     },
     children: [
       {
-        path: '/inManage',
-        name: 'inManage',
-        component: () => import('../views/manage/inManage.vue'),
+        path: '/index',
+        name: 'manageList',
+        component: () => import('../views/manage/index.vue'),
+        redirect: '/index/inManage',
         meta: {
-          title: '进货订单'
-        }
-      },
-      {
-        path: '/storageManage',
-        name: 'storageManage',
-        component: () => import('../views/manage/storageManage.vue'),
-        meta: {
-          title: '库存'
-        }
-      },
-      {
-        path: '/outManage',
-        name: 'outManage',
-        component: () => import('../views/manage/outManage.vue'),
-        meta: {
-          title: '出库'
-        }
-      },
+          title: '进销存管理'
+        },
+        children: [
+          {
+            path: '/inManage',
+            name: 'inManage',
+            component: () => import('../views/manage/inManage.vue'),
+            meta: {
+              title: '进货订单'
+            }
+          },
+          {
+            path: '/storageManage',
+            name: 'storageManage',
+            component: () => import('../views/manage/storageManage.vue'),
+            meta: {
+              title: '库存'
+            }
+          },
+          {
+            path: '/outManage',
+            name: 'outManage',
+            component: () => import('../views/manage/outManage.vue'),
+            meta: {
+              title: '出库'
+            }
+          },
+        ]
+      }
     ]
   },
   {

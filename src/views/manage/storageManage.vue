@@ -1,9 +1,12 @@
 <template>
-  <div  class="page storage-manage">
-    <h3>仓库存储</h3>
+  <div class="page storage-manage">
+    <div class="manage-header">
+      <b>仓库存储</b>
+    </div>
     <div class="list">
       <el-table
         :data="tableData"
+        border
         style="width: 100%">
         <el-table-column prop="id" label="编号" align="center" width="50px"></el-table-column>
         <el-table-column
@@ -25,6 +28,7 @@
     </div>
 
     <el-pagination
+      class="pagination"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="total, sizes, prev, pager, next, jumper"

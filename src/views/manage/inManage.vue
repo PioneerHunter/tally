@@ -1,38 +1,55 @@
 <template>
   <div class="page in-manage">
-    <h3>采购订单</h3>
-    <button @click="openDialog">添加采购单</button>
+    <div class="manage-header">
+      <b>采购订单</b>
+      <button class="btn" @click="openDialog">添加采购单</button>
+    </div>
     <div class="list">
       <el-table
         :data="tableData"
+        border
         style="width: 100%">
-        <el-table-column prop="id" label="编号"></el-table-column>
+        <el-table-column prop="id" label="编号" width="60" align="center"></el-table-column>
         <el-table-column
           prop="name"
+          align="center"
           label="商品名">
         </el-table-column>
         <el-table-column
           prop="supplier"
+          align="center"
           label="供应商">
         </el-table-column>
         <el-table-column
           prop="buyer"
-          label="采购人员">
+          align="center"
+          label="采购人员"
+        >
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.buyer" size="medium">{{ scope.row.buyer }}</el-tag>
+          </template>
         </el-table-column>
         <el-table-column
           prop="money"
+          align="center"
           label="总金额">
         </el-table-column>
-        <el-table-column prop="num" label="数量"></el-table-column>
+        <el-table-column prop="num" label="数量" align="center"></el-table-column>
         <el-table-column
           prop="invoiceNum"
-          label="发票号">
+          align="center"
+          label="发票号"
+        >
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.invoiceNum" size="medium" type="danger">{{ scope.row.invoiceNum }}</el-tag>
+          </template>
         </el-table-column>
-        <el-table-column prop="indentDate" label="订单日期"></el-table-column>
-        <el-table-column prop="arriveDate" label="到货日期"></el-table-column>
-        <el-table-column prop="notes" label="备注"></el-table-column>
+        <el-table-column prop="indentDate" label="订单日期" show-overflow-tooltip align="center"></el-table-column>
+        <el-table-column prop="arriveDate" label="到货日期" show-overflow-tooltip align="center"></el-table-column>
+        <el-table-column prop="notes" label="备注" align="center"></el-table-column>
         <el-table-column
           fixed="right"
+          align="center"
           label="操作"
           width="100">
           <template slot-scope="scope">
@@ -44,6 +61,7 @@
     </div>
 
     <el-pagination
+      class="pagination"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="total, sizes, prev, pager, next, jumper"
@@ -122,13 +140,17 @@ export default {
         this.tableData = val
       })
       // console.log(`当前页: ${val}`);
-    }
+    },
   }
 }
 </script>
 
 <style lang='less' scoped>
-.in-manage {
-  
+/deep/.el-table__header-wrapper {
+  // background-color: red;
+  thead tr th {
+    // background-color: #8C9EFF;
+    // color: white;
+  }
 }
 </style>

@@ -138,6 +138,8 @@
   align-items: center;
   width: 100%;
   margin-top: 10px;
+  background-color: #fff;
+  border: 0px;
 }
 
 .container .form .btn button {

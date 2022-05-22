@@ -186,7 +186,8 @@ export default {
       // margin-right: 10px;
       // background-color: rgb(12, 180, 236);
       // background-color: #81D4FA;
-      background-color: rgb(97, 202, 74);
+      background-color: #7E57C2;
+      color: white;
       // border-right: 1px solid white;
       cursor: pointer;
       // transition: 0.5s;

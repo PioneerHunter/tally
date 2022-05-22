@@ -150,7 +150,7 @@
       </div>
       
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="visible = false">确 定</el-button>
+        <button class="btn" type="primary" @click="visible = false">确 定</button>
       </span>
     </el-dialog>
   </div>

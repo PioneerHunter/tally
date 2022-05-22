@@ -18,7 +18,7 @@
               其他：<input v-model="form.other" type="text">
             </div>
           </div>
-          <button @click="addSalary">新增/修改</button>
+          <button class="btn" @click="addSalary">新增/修改</button>
         </div>
       </transition>
     </div>
@@ -65,7 +65,7 @@ export default {
             return (
               <span>
                 <button
-                  class="button-demo"
+                  class="btn"
                   on-click={() => this.deleteRow(row.id, rowIndex)}
                 >
                   删除
@@ -105,9 +105,11 @@ export default {
       let ele = document.querySelector('.add')
       if (this.show) {
         ele.style.backgroundColor  = "white"
+        ele.style.color  = "black"
       } else {
         setTimeout(() => {
-          ele.style.backgroundColor  = "rgba(97, 202, 74, 0.5)"
+          ele.style.backgroundColor  = "#7E57C2"
+          ele.style.color  = "white"
         }, 400)
       }
     },
@@ -143,8 +145,9 @@ export default {
   padding: 10px;
   border-radius: 10px;
   // border: 1px solid #888888;
-  box-shadow: 0 0 10px #888888;
-  background-color: rgba(97, 202, 74, 0.5);
+  box-shadow: 0 0 15px #888888;
+  background-color: #7E57C2;
+  color: white;
   .add-name {
     cursor: pointer;
   }

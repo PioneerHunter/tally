@@ -96,7 +96,7 @@ export default {
       if (!await this.validateLogin()) return
       let storage = sessionStorage
       storage.setItem("loginState", 2)
-      this.$router.push('salary')
+      this.$router.push('/inManage')
       this.$message.success('登录成功！')
       // let params = {
       //   username: this.loginForm.name,

@@ -34,7 +34,14 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="销售人员">
-            <el-input v-model="form.salesman"></el-input>
+            <el-select v-model="form.salesman" filterable placeholder="支持搜索">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="顾客">
             <el-input v-model="form.customer"></el-input>
@@ -64,7 +71,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="validateForm">确 定</el-button>
+        <button class="btn" type="primary" @click="validateForm">确 定</button>
       </span>
     </el-dialog>
   </div>
@@ -72,7 +79,7 @@
 
 <script>
 import { db } from '@/data/db'
-import { search, deleteData } from '@/utils/dbMethod'
+import { search, getData } from '@/utils/dbMethod'
 import { timeFormat } from '@/utils/public'
 
 export default {
@@ -156,7 +163,14 @@ export default {
           }
           this.form.id = val[val.length - 1].id + 1
         }
+        this.getStaffs()
       })
+    },
+    /** 获取员工列表 */
+    async getStaffs() {
+      console.log(1);
+      let staff = await getData('salary', 'id')
+      this.options = staff.map(ele => ({ value: ele.name, label: ele.name }))
     },
     async getDetail(id) {
       const [ detail ] = await search('sales', { id })

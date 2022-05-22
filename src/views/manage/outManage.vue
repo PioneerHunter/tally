@@ -1,39 +1,52 @@
 <template>
   <div class="page out-manage">
-    <h3>销售订单</h3>
-    <button @click="openDialog">添加销售单</button>
+    <div class="manage-header">
+      <b>销售订单</b>
+      <button class="btn" @click="openDialog">添加销售单</button>
+    </div>
     <div class="list">
       <el-table
         :data="tableData"
+        border
         style="width: 100%">
-        <el-table-column prop="id" label="编号"></el-table-column>
-        <el-table-column
-          prop="name"
-          label="商品名">
-        </el-table-column>
+        <el-table-column prop="id" label="编号" align="center"></el-table-column>
+        <el-table-column prop="name" label="商品名" align="center"></el-table-column>
         <el-table-column
           prop="customer"
-          label="顾客">
+          label="顾客"
+          align="center">
         </el-table-column>
         <el-table-column
           prop="salesman"
-          label="销售人员">
+          label="销售人员"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.salesman" size="medium">{{ scope.row.salesman }}</el-tag>
+          </template>
         </el-table-column>
         <el-table-column
           prop="money"
-          label="总金额">
+          label="总金额"
+          align="center">
         </el-table-column>
-        <el-table-column prop="num" label="数量"></el-table-column>
+        <el-table-column prop="num" label="数量" align="center"></el-table-column>
         <el-table-column
           prop="invoiceNum"
-          label="发票号">
+          label="发票号"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.invoiceNum" size="medium" type="danger">{{ scope.row.invoiceNum }}</el-tag>
+          </template>
         </el-table-column>
-        <el-table-column prop="salesTime" label="销售日期"></el-table-column>
-        <el-table-column prop="profit" label="利润"></el-table-column>
-        <el-table-column prop="notes" label="备注"></el-table-column>
+        <el-table-column prop="salesTime" label="销售日期" show-overflow-tooltip align="center"></el-table-column>
+        <el-table-column prop="profit" label="利润" align="center"></el-table-column>
+        <el-table-column prop="notes" label="备注" align="center"></el-table-column>
         <el-table-column
           fixed="right"
           label="操作"
+          align="center"
           width="100">
           <template slot-scope="scope">
             <el-button @click="openDialog(scope.row)" type="text" size="small">编辑</el-button>
@@ -44,6 +57,7 @@
     </div>
 
     <el-pagination
+      class="pagination"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       layout="total, sizes, prev, pager, next, jumper"
