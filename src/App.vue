@@ -33,8 +33,16 @@ export default {
 
 <style>
 body {
+  position: fixed;
+  top: 0;
+  left: 0;
   padding: 0;
   margin: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif;

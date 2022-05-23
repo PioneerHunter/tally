@@ -34,9 +34,9 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="销售人员">
-            <el-select v-model="form.salesman" filterable placeholder="支持搜索">
+            <el-select v-model="form.salesMan" filterable placeholder="支持搜索">
               <el-option
-                v-for="item in options"
+                v-for="item in salesMan"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -93,7 +93,7 @@ export default {
         name: '',
         id: '',
         salesTime: '',
-        salesman: '',
+        salesMan: '',
         customer: '',
         invoiceNum: '',
         profit: '',
@@ -102,6 +102,7 @@ export default {
         notes: '',
       },
       options: [],
+      salesMan: [],
       maxGoods: '',
       oldForm: {},
       rules: {
@@ -170,7 +171,7 @@ export default {
     async getStaffs() {
       console.log(1);
       let staff = await getData('salary', 'id')
-      this.options = staff.map(ele => ({ value: ele.name, label: ele.name }))
+      this.salesMan = staff.map(ele => ({ value: ele.name, label: ele.name }))
     },
     async getDetail(id) {
       const [ detail ] = await search('sales', { id })

@@ -32,7 +32,7 @@ section {
   left: 10px;
   width: 10%;
   height: 70%;
-  background-color: #7E57C2;
+  // background-color: #7E57C2;
   opacity: 0.8;
   text-align: center;
   border-radius: 5px;
@@ -40,14 +40,12 @@ section {
   box-shadow: 0 0 10px #888888;
   cursor: pointer;
   .sider-bar {
-    // cursor: pointer;
     margin-top: 80px;
     div {
-      // margin: 10px 0;
       line-height: 40px;
     }
     div:hover {
-      background-color: #6b2fd2;
+      // background-color: #6b2fd2;
     }
     div:active {
       color: black;

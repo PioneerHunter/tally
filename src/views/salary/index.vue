@@ -103,12 +103,16 @@ export default {
     slide() {
       this.show = !this.show
       let ele = document.querySelector('.add')
+      let back = document.querySelectorAll('.btn')[0]
+      let backgroundColor = getComputedStyle(back, null).getPropertyValue("background-color")
+      console.log(backgroundColor);
       if (this.show) {
         ele.style.backgroundColor  = "white"
         ele.style.color  = "black"
       } else {
         setTimeout(() => {
-          ele.style.backgroundColor  = "#7E57C2"
+          // ele.style.backgroundColor  = "#7E57C2"
+          ele.style.backgroundColor  = backgroundColor
           ele.style.color  = "white"
         }, 400)
       }
@@ -146,8 +150,9 @@ export default {
   border-radius: 10px;
   // border: 1px solid #888888;
   box-shadow: 0 0 15px #888888;
-  background-color: #7E57C2;
+  // background-color: #7E57C2;
   color: white;
+  opacity: 0.8;
   .add-name {
     cursor: pointer;
   }

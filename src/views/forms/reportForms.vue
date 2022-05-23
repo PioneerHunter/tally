@@ -178,6 +178,7 @@ export default {
     box-shadow: 0 0 10px #888888;
     margin-bottom: 40px;
     border-radius: 5px;
+    opacity: 0.8;
     div {
       flex: 1;
       height: 50px;
@@ -186,7 +187,7 @@ export default {
       // margin-right: 10px;
       // background-color: rgb(12, 180, 236);
       // background-color: #81D4FA;
-      background-color: #7E57C2;
+      // background-color: #7E57C2;
       color: white;
       // border-right: 1px solid white;
       cursor: pointer;

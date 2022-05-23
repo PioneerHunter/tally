@@ -1,8 +1,8 @@
 <template>
   <div class="invoice">
-    <section class="top-bar flex">
+    <div class="manage-header">
       <div>
-        <el-select v-model="form.province" placeholder="请选择开票地区">
+        <el-select class="select-area" v-model="form.province" placeholder="请选择开票地区">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -15,7 +15,7 @@
         <i class="el-icon-view"></i>
         预览
       </button>
-    </section>
+    </div>
 
     <el-steps :active="active" align-center>
       <el-step title="发票基本信息"></el-step>
@@ -205,8 +205,11 @@ export default {
 .invoice {
   max-width: 1100px;
   margin: 0 auto;
-  .top-bar {
-    justify-content: space-between;
+  .manage-header {
+    padding: 0 40px;
+    .select-area {
+      opacity: 0.9;
+    }
   }
   section {
     margin: 50px auto;
@@ -230,6 +233,7 @@ export default {
       box-shadow: 0 0 3px #888888;
       cursor: pointer;
       caret-color: #dcdfe6;
+      opacity: 0.8;
     }
     input:focus {
       box-shadow: 0 0 10px #888888;

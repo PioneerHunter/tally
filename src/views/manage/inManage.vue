@@ -9,7 +9,7 @@
         :data="tableData"
         border
         style="width: 100%">
-        <el-table-column prop="id" label="编号" width="60" align="center"></el-table-column>
+        <el-table-column prop="id" label="编号" align="center"></el-table-column>
         <el-table-column
           prop="name"
           align="center"
@@ -146,8 +146,9 @@ export default {
 </script>
 
 <style lang='less' scoped>
-/deep/.el-table__header-wrapper {
+/deep/.el-table {
   // background-color: red;
+  // opacity: 0.9;
   thead tr th {
     // background-color: #8C9EFF;
     // color: white;

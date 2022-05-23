@@ -98,6 +98,8 @@ export default {
       storage.setItem("loginState", 2)
       this.$router.push('/inManage')
       this.$message.success('登录成功！')
+      let body = document.querySelector('body')
+      body.className = 'theme-purple'
       // let params = {
       //   username: this.loginForm.name,
       //   password: this.loginForm.password,

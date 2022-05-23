@@ -40,7 +40,7 @@
             <el-tag v-if="scope.row.invoiceNum" size="medium" type="danger">{{ scope.row.invoiceNum }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="salesTime" label="销售日期" show-overflow-tooltip align="center"></el-table-column>
+        <el-table-column prop="salesTime" label="销售日期"  align="center"></el-table-column>
         <el-table-column prop="profit" label="利润" align="center"></el-table-column>
         <el-table-column prop="notes" label="备注" align="center"></el-table-column>
         <el-table-column

@@ -8,17 +8,17 @@
       <a class="item active"  @click="() => { $router.push('inManage') }">
         <i class="icon el-icon-edit"></i><span>进销存</span>
       </a>
-      <a class="item"  @click="() => { $router.push('salary') }">
+      <a class="item" @click="() => { $router.push('salary') }">
         <i class="icon el-icon-money"></i><span>工资</span>
       </a>
-      <a class="item"  @click="() => { $router.push('invoice') }">
+      <a class="item" @click="() => { $router.push('invoice') }">
         <i class="icon el-icon-s-check"></i><span>发票</span>
       </a>
-      <a class="item"  @click="() => { $router.push('reportForms') }">
+      <a class="item" @click="() => { $router.push('reportForms') }">
         <i class="icon el-icon-s-data"></i><span>报表</span>
       </a>
-      <a class="item"  @click="() => { $router.push('set') }">
-        <i class="icon el-icon-edit-outline"></i><span>设置</span>
+      <a class="item" @click="() => { $router.push('set') }">
+        <i class="icon el-icon-setting"></i><span>设置</span>
       </a>
       <a class="item" @click="foldMenu">
         <i class="icon el-icon-caret-left"></i><span>隐藏</span>
@@ -62,7 +62,8 @@ export default {
   // left: calc(50% - 150px);
   left: 10%;
   cursor: pointer;
-  background-color: rgba(126, 87, 194, 0.5);
+  
+  // background-color: rgba(126, 87, 194, 0.5);
   border-radius: 5px;
   color: white;
   .shrink {
@@ -90,7 +91,6 @@ export default {
       }
       span {
         display: none;
-        // transition: 0.5s;
       }
     }
     a:hover .icon {
