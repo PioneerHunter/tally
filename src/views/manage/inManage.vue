@@ -37,6 +37,7 @@
         <el-table-column prop="num" label="数量" align="center"></el-table-column>
         <el-table-column
           prop="invoiceNum"
+          show-overflow-tooltip
           align="center"
           label="发票号"
         >
@@ -46,7 +47,7 @@
         </el-table-column>
         <el-table-column prop="indentDate" label="订单日期" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column prop="arriveDate" label="到货日期" show-overflow-tooltip align="center"></el-table-column>
-        <el-table-column prop="notes" label="备注" align="center"></el-table-column>
+        <el-table-column prop="notes" label="备注" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column
           v-show="isAdmin"
           fixed="right"

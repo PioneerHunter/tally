@@ -204,11 +204,17 @@ export default {
 <style lang="less" scoped>
 .invoice {
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
+  padding: 50px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #888888;
+  background-color: rgba(248, 239, 239, 0.8);
   .manage-header {
     padding: 0 40px;
     .select-area {
       opacity: 0.9;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #888888;
     }
   }
   section {

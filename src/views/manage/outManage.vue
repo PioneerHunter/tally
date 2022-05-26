@@ -17,12 +17,12 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="salesman"
+          prop="salesMan"
           label="销售人员"
           align="center"
         >
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.salesman" size="medium">{{ scope.row.salesman }}</el-tag>
+            <el-tag v-if="scope.row.salesMan" size="medium">{{ scope.row.salesMan }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -33,6 +33,7 @@
         <el-table-column prop="num" label="数量" align="center"></el-table-column>
         <el-table-column
           prop="invoiceNum"
+          show-overflow-tooltip
           label="发票号"
           align="center"
         >
@@ -40,9 +41,9 @@
             <el-tag v-if="scope.row.invoiceNum" size="medium" type="danger">{{ scope.row.invoiceNum }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="salesTime" label="销售日期"  align="center"></el-table-column>
+        <el-table-column prop="salesTime" label="销售日期" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column prop="profit" label="利润" align="center"></el-table-column>
-        <el-table-column prop="notes" label="备注" align="center"></el-table-column>
+        <el-table-column prop="notes" label="备注" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column
           v-if="isAdmin"
           fixed="right"

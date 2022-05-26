@@ -1,6 +1,6 @@
 <template>
   <div class="report">
-    <h3>报表</h3>
+    <h3>利润报表/元</h3>
     <section class="chart">
       <div class="chart-bar flex">
         <div @click="changeLine">线图</div>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { getData, search } from '@/utils/dbMethod'
+
 export default {
   name: 'reportForms',
   components: {},
@@ -30,17 +32,21 @@ export default {
       type: 'line',
       options: {},
       series: [],
+      salesData: [],
     }
   },
-  create () {
+  created () {
+    this.getSalesList()
   },
-  mounted () {
-    this.changeLine()
-  },
+  mounted () {},
   methods: {
     refresh() {
       Object.keys(this.options).forEach(key => (this.options[key] = ''))
       this.series = []
+    },
+    async getSalesList() {
+      this.salesData = await getData('sales', 'id')
+      this.changeLine()
     },
     changeLine() {
       this.type = 'line'
@@ -51,16 +57,15 @@ export default {
         },
         stroke: {
           show: true,
-          curve: 'smooth',   
+          curve: 'smooth',
         },
         xaxis: {
-          categories: [1991,1992,1993,1994,1995,1996,1997,1998,1999]
+          categories: this.salesData.map(ele => ele.name)
         }
       }
       this.series = [{
-        data: [1,2,3,4,5,6,7,8]
+        data: this.salesData.map(ele => ele.profit)
       }]
-      // console.log(this.options, this.series);
     },
     changeBar() {
       this.type = 'bar'
@@ -75,20 +80,12 @@ export default {
         },
       }
       this.series = [{
-        data: [{
-          x: 'category A',
-          y: 10
-        }, {
-          x: 'category B',
-          y: 18
-        }, {
-          x: 'category C',
-          y: 13
-        }, {
-          x: 'category D',
-          y: 19
-        }]
+        data: []
       }]
+      
+      this.calProfit().forEach((val, key) => {
+        this.series[0].data.push({ x: key, y: val })
+      })
     },
     changeColume() {
       this.type = 'bar'
@@ -102,13 +99,12 @@ export default {
           }
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: this.salesData.map(ele => ele.name)
         }
       }
       this.series = [{
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        data: this.salesData.map(ele => ele.profit)
       }]
-      // console.log(this.options, this.series);
     },
     changeDonut() {
       this.type = 'donut'
@@ -124,9 +120,13 @@ export default {
         // chartOptions: {
         //   labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
         // }
-        labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
+        labels: []
       }
-      this.series = [30, 40, 20, 10]
+      this.series = []
+      this.calProfit().forEach((val, key) => {
+        this.options.labels.push(key)
+        this.series.push(val)
+      })
     },
     changeArea() {
       this.type = 'area'
@@ -135,30 +135,42 @@ export default {
           id: 'colume-chart'
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: this.salesData.map(ele => ele.name)
         }
       }
       this.series = [{
         // name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+        data: this.salesData.map(ele => ele.profit)
       }]
     },
     changeRadar() {
       this.type = 'radar'
       this.options = {
-        labels: ['April', 'May', 'June', 'July', 'August', 'September'],
+        labels: ['六月', '五月', '四月', '三月', '二月', '一月'],
       }
       this.series = [
         {
-          name: "Radar Series 1",
+          name: "商品1",
           data: [45, 52, 38, 24, 33, 10]
         },
         {
-          name: "Radar Series 2",
+          name: "商品2",
           data: [26, 21, 20, 6, 8, 15]
         }
       ]
     },
+    // 计算好各商品的利润和
+    calProfit() {
+      let map = new Map()
+      this.salesData.forEach(ele => {
+        if (map.has(ele.name)) {
+          map.set(ele.name, map.get(ele.name) + ele.profit)
+        } else {
+          map.set(ele.name, ele.profit)
+        }
+      })
+      return map
+    }
   }
 }
 </script>
@@ -210,10 +222,17 @@ export default {
 }
 </style>
 
-<style>
+<style lang="less">
 .apexcharts-canvas  {
   height: 600px;
   border-radius: 5px;
   box-shadow: 0 0 10px #888888;
+  background-color: rgba(248, 239, 239, 0.5);
+  .apexcharts-xaxis {
+    .apexcharts-datalabel {
+      color: black;
+    }
+    
+  }
 }
 </style>

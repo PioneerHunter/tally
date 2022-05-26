@@ -22,7 +22,7 @@
         </div>
       </transition>
     </div>
-    <div class="list">
+    <!-- <div class="list">
       <ve-table
         rowKeyFieldName="rowKey"
         :columns="columns"
@@ -30,16 +30,36 @@
         :editOption="editOption"
         border-y
       />
+    </div> -->
+    <div class="swiper-3d">
+      <swiper class="swiper" :options="swiperOption">
+        <template v-for="item in tableData">
+          <swiper-slide :key="item.name">
+            <div>姓名：{{ item.name }}</div>
+            <div v-if="item.salary">底薪：{{ item.salary }}</div>
+            <div v-if="item.extraSalary">提成：{{ item.extraSalary }}</div>
+            <div v-if="item.other">其他：{{ item.other }}</div>
+            <button class="btn" @click="deleteRow(item.id)">删除</button>
+          </swiper-slide>
+        </template>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+      <!-- <button class="btn">新增/修改员工工资</button> -->
     </div>
   </div>
 </template>
 
 <script>
 import { addData, getData, updateData, search, deleteData } from '@/utils/dbMethod'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 
 export default {
   name: 'Salary',
-  components: {},
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   inject: ['reload'],
   data () {
     return {
@@ -52,6 +72,22 @@ export default {
         other: '',
       },
       show: false,
+      swiperOption: {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows : true
+        },
+        pagination: {
+          el: '.swiper-pagination'
+        }
+      },
       rowKey: 0,
       columns: [
         { field: "name", key: "name", title: "姓名", align: "center", edit: true },
@@ -135,9 +171,9 @@ export default {
       this.reload()
       // addData('salary', this.form)
     },
-    deleteRow(id, index) {
-      this.tableData.splice(index, 1)
+    deleteRow(id) {
       deleteData('salary', id)
+      this.reload()
     },
   }
 }
@@ -184,6 +220,62 @@ export default {
     }
   }
 }
+
+.swiper-3d {
+  width: 100%;
+  height: 500px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #888888;
+  // opacity: 0.8;
+  .swiper {
+    // opacity: 0.8;
+    height: 100%;
+    width: 100%;
+
+    .swiper-slide {
+      position: relative;
+      top: 0;
+      width: 300px;
+      height: 300px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      font-family: KaiTi;
+      // background-color: #F5F5DC; // 米色
+      // background-color:	#FF8C00; // 橙色
+      // background-color: #ff6633;
+      background-color: rgba(255, 102, 51, 0.8);
+      // background-color: #ff9933; // 黄色
+      background-position: center;
+      background-size: cover;
+      border-radius: 5px;
+      box-shadow: 0 0 15px #888888;
+      // color: black;
+      color: white;
+      div {
+        padding: 10px;
+      }
+      div:first-child {
+        margin-top: 20px;
+      }
+      button {
+        position: absolute;
+        bottom: 20px;
+        transform: translateX(-50%);
+      }
+    }
+
+    .swiper-pagination {
+      /deep/ .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        background-color: white;
+      }
+    }
+  }
+}
+
+
 
 // vue 过度动画
 .slide-fade-enter-active {
