@@ -60,7 +60,10 @@ export default {
       this.$alert('', '确认退出登录吗？', {
         confirmButtonText: '确定',
         callback: action => {
-          if (action === 'confirm') this.$router.push('/')
+          if (action === 'confirm') {
+            this.$router.push('/')
+            sessionStorage.clear()
+          }
         }
       });
     },
@@ -86,10 +89,16 @@ export default {
   max-width: 960px;
   margin: 0 auto;
   .setting-items {
-    padding: 20px 0;
+    min-height: 500px;
+    padding: 100px 0;
     background-color: rgb(252, 246, 246);
     text-align: center;
     opacity: 0.8;
+    box-shadow: 0 0 10px #888888;
+    border-radius: 5px;
+    section {
+      margin-top: 50px;
+    }
   }
   .background {
     text-align: center;

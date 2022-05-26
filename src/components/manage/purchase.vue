@@ -122,18 +122,6 @@ export default {
     // db.storage.orderBy('id').offset(0).toArray().then((val) => {
       // console.log(val);
     // })
-    // db.purchase.orderBy('id').offset(5).limit(5).toArray().then((val) => {
-    //   console.log(val);
-    // })
-    // db.purchase.orderBy('id').offset(2).limit(2).toArray().then((val) => {
-    //   console.log(val);
-    // })
-    // db.purchase.where({ name: 'dsaf' }).toArray().then(goods => {
-    //   goods.forEach(val => {
-    //     console.log(val.money);
-    //   })
-    // })
-    // console.log(db.purchase.get({ name: 'dasfdsafdsafsa' }));
   },
   methods: {
     async beiyong() {

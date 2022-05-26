@@ -2,7 +2,7 @@
   <div class="page in-manage">
     <div class="manage-header">
       <b>采购订单</b>
-      <button class="btn" @click="openDialog">添加采购单</button>
+      <button v-show="isAdmin" class="btn" @click="openDialog">添加采购单</button>
     </div>
     <div class="list">
       <el-table
@@ -48,6 +48,7 @@
         <el-table-column prop="arriveDate" label="到货日期" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column prop="notes" label="备注" align="center"></el-table-column>
         <el-table-column
+          v-show="isAdmin"
           fixed="right"
           align="center"
           label="操作"
@@ -88,6 +89,7 @@ export default {
   },
   data () {
     return {
+      isAdmin: true,
       tableData: [],
       page: {
         pageNum: 0,
@@ -97,6 +99,8 @@ export default {
     }
   },
   created () {
+    this.isAdmin = window.sessionStorage.getItem('isAdmin') === 'true'
+    console.log(this.isAdmin);
     db.purchase.orderBy('id').toArray().then((val) => {
       this.page.total = val.length
     })

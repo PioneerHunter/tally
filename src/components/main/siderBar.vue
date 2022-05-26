@@ -59,7 +59,6 @@ export default {
   z-index: 100;
   position: fixed;
   bottom: 5%;
-  // left: calc(50% - 150px);
   left: 10%;
   cursor: pointer;
   
@@ -76,7 +75,7 @@ export default {
   }
   .items {
     display: flex;
-    opacity: 0.8;
+    opacity: 0.9;
     a {
       display: flex;
       flex-direction: column;

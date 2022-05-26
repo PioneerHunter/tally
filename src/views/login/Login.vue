@@ -86,6 +86,8 @@ export default {
     }
   },
   created () {
+    let body = document.querySelector('body')
+    body.style.backgroundImage = 'url(' + require('../../img/飞雪.png') + ')'
     getData('user', 'id').then(val => {
       console.log(val, 1);
     })
@@ -121,6 +123,8 @@ export default {
         this.$message.warning('请输入正确的账号密码！')
         return false
       }
+      let storage = sessionStorage
+      storage.setItem("isAdmin", account.isAdmin)
       return true
     },
     async register() {

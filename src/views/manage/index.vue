@@ -28,7 +28,7 @@ export default {
 <style lang='less' scoped>
 section {
   position: fixed;
-  top: 8%;
+  top: 11%;
   left: 10px;
   width: 10%;
   height: 70%;

@@ -2,7 +2,7 @@
   <div class="page out-manage">
     <div class="manage-header">
       <b>销售订单</b>
-      <button class="btn" @click="openDialog">添加销售单</button>
+      <button v-if="isAdmin" class="btn" @click="openDialog">添加销售单</button>
     </div>
     <div class="list">
       <el-table
@@ -44,6 +44,7 @@
         <el-table-column prop="profit" label="利润" align="center"></el-table-column>
         <el-table-column prop="notes" label="备注" align="center"></el-table-column>
         <el-table-column
+          v-if="isAdmin"
           fixed="right"
           label="操作"
           align="center"
@@ -84,6 +85,7 @@ export default {
   },
   data () {
     return {
+      isAdmin: true,
       tableData: [],
       page: {
         pageNum: 0,
@@ -93,6 +95,7 @@ export default {
     }
   },
   created () {
+    this.isAdmin = window.sessionStorage.getItem('isAdmin') === 'true'
     db.sales.orderBy('id').toArray().then((val) => {
       this.page.total = val.length
     })

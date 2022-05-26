@@ -1,7 +1,7 @@
 <template>
   <div class="salary">
     <div class="add center">
-      <div class="add-name" @click="slide">新增/修改员工工资</div>
+      <div class="add-name" @click="slide">{{ title }}</div>
       <transition name="slide-fade">
         <div v-show="show">
           <div class="flex add-form">
@@ -43,6 +43,8 @@ export default {
   inject: ['reload'],
   data () {
     return {
+      isAdmin: true,
+      title: '新增/修改员工工资',
       form: {
         name: '',
         salary: '',
@@ -57,7 +59,7 @@ export default {
         { field: "extraSalary", key: "extraSalary", title: "提成", align: "center", edit: true },
         { field: "other", key: "other", title: "其他", align: "center", edit: true },
         { 
-          field: "",
+          field: "option",
           key: "e",
           title: "操作",
           align: "center",
@@ -85,12 +87,13 @@ export default {
     }
   },
   created () {
+    this.isAdmin = window.sessionStorage.getItem('isAdmin') === 'true'
+    if (!this.isAdmin) {
+      this.columns.pop()
+      this.title ='员工工资展示'
+    }
     getData('salary', 'id').then(data => {
-      console.log(data)
-      // this.tableData = data.map(val => {
-      //   val['rowKey'] = this.rowKey
-      //   this.rowKey++
-      // })
+      // console.log(data)
       data.forEach(ele => {
         ele.rowKey = this.rowKey
         this.tableData.push(ele)
@@ -101,6 +104,7 @@ export default {
   mounted () {},
   methods: {
     slide() {
+      if (!this.isAdmin) return false
       this.show = !this.show
       let ele = document.querySelector('.add')
       let back = document.querySelectorAll('.btn')[0]
