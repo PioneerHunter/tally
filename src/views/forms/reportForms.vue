@@ -179,9 +179,6 @@ export default {
 .report {
   max-width: 900px;
   margin: 20px auto;
-  // padding: 20px;
-  // box-shadow: 0 0 10px #888888;
-  // border-radius: 20px;
 }
 
 .chart {
@@ -200,7 +197,6 @@ export default {
       // background-color: rgb(12, 180, 236);
       // background-color: #81D4FA;
       // background-color: #7E57C2;
-      color: white;
       // border-right: 1px solid white;
       cursor: pointer;
       // transition: 0.5s;
@@ -211,12 +207,6 @@ export default {
     div:last-child {
       border-radius: 0 5px 5px 0;
       // border-right: 0px solid rgb(12, 180, 236);
-    }
-    div:hover {
-      transition: 0.5s;
-      transform: scale(130%, 130%);
-      opacity: 0.8;
-      border-radius: 5px;
     }
   }
 }

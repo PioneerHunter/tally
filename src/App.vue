@@ -32,6 +32,11 @@ export default {
 </script>
 
 <style>
+html {
+  /* filter: invert(1) hue-rotate(180deg);
+  transition: color 300ms, background-color 300ms;
+  background-color: black; */
+}
 body {
   position: fixed;
   top: 0;

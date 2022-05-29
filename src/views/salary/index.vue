@@ -143,7 +143,7 @@ export default {
       if (!this.isAdmin) return false
       this.show = !this.show
       let ele = document.querySelector('.add')
-      let back = document.querySelectorAll('.btn')[0]
+      let back = document.querySelectorAll('.circle')[0]
       let backgroundColor = getComputedStyle(back, null).getPropertyValue("background-color")
       console.log(backgroundColor);
       if (this.show) {
@@ -246,7 +246,7 @@ export default {
       // background-color: #F5F5DC; // 米色
       // background-color:	#FF8C00; // 橙色
       // background-color: #ff6633;
-      background-color: rgba(255, 102, 51, 0.8);
+      // background-color: rgba(255, 102, 51, 0.8); // 主打
       // background-color: #ff9933; // 黄色
       background-position: center;
       background-size: cover;

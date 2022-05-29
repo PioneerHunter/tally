@@ -2,7 +2,13 @@
   <div class="page out-manage">
     <div class="manage-header">
       <b>销售订单</b>
-      <button v-if="isAdmin" class="btn" @click="openDialog">添加销售单</button>
+      <button v-if="isAdmin" class="btn neon" @click="openDialog">
+        <div v-if="theme === 'theme-color'"></div>
+        <div v-if="theme === 'theme-color'"></div>
+        <div v-if="theme === 'theme-color'"></div>
+        <div v-if="theme === 'theme-color'"></div>
+        添加销售单
+      </button>
     </div>
     <div class="list">
       <el-table
@@ -51,8 +57,8 @@
           align="center"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="openDialog(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="deleteSales(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="openDialog(scope.row)" type="text">编辑</el-button>
+            <el-button @click="deleteSales(scope.row)" type="text">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -87,6 +93,7 @@ export default {
   data () {
     return {
       isAdmin: true,
+      theme: sessionStorage.getItem('theme'),
       tableData: [],
       page: {
         pageNum: 0,

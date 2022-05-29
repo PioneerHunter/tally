@@ -8,9 +8,9 @@
       <section class="theme">
         <h3>主题切换</h3>
         <el-radio-group v-model="radio">
-          <el-radio :label="1">高贵紫</el-radio>
-          <el-radio :label="2">天空蓝</el-radio>
-          <el-radio :label="3">炫彩</el-radio>
+          <el-radio label="theme-purple">高贵紫</el-radio>
+          <el-radio label="theme-blue">天空蓝</el-radio>
+          <el-radio label="theme-color">炫彩</el-radio>
         </el-radio-group>
       </section>
       <section class="background">
@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'settings',
+  name: 'Settings',
   components: {},
   data () {
     return {
@@ -38,9 +38,9 @@ export default {
   watch: {
     radio() {
       let body = document.querySelector('body')
-      if (this.radio === 1) body.className = 'theme-purple'
-      if (this.radio === 2) body.className = 'theme-blue'
-      if (this.radio === 3) body.className = 'theme-color'
+      body.className = this.radio
+      let storage = sessionStorage
+      storage.setItem('theme', this.radio)
     },
   },
   created () {
@@ -51,10 +51,7 @@ export default {
   },
   methods: {
     initRadio() {
-      let name = document.querySelector('body').className
-      if (name === 'theme-purple') this.radio = 1
-      if (name === 'theme-blue') this.radio = 2
-      if (name === 'theme') this.radio = 3
+      this.radio = sessionStorage.getItem('theme')
     },
     outLogin() {
       this.$alert('', '确认退出登录吗？', {

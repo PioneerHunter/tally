@@ -1,4 +1,13 @@
 .theme-blue {
+  // 菜单
+  .main {
+    .circle {
+      background-color: #409eff;
+      border: 1px solid #409eff;
+      box-shadow: 0 0 10px #888888;
+    }
+  }
+
   // 按钮
   .btn {
     margin-right: 10px;
@@ -17,7 +26,10 @@
 
   // 菜单栏
   .sider-bar {
-    background-color: rgba(64, 158, 255, 0.5);
+    background-color: rgba(64, 158, 255, 0.4);
+    &:hover {
+      background-color: rgba(64, 158, 255, 0.7);
+    }
   }
 
   // 进销存管理页
@@ -25,7 +37,7 @@
     section {
       background-color: #6baff3;
     }
-    .sider-bar {
+    .manage-sider-bar {
       div:hover {
         background-color: #409eff;
       }
@@ -39,6 +51,9 @@
     }
     .swiper-3d {
       background-color: rgba(64, 158, 255, 0.5);
+      .swiper-slide {
+        background-color: rgba(255, 102, 51, 0.8);
+      }
     }
   }
   
@@ -47,6 +62,13 @@
     .chart-bar {
       div {
         background-color: #409eff;
+        color: white;
+        &:hover {
+          transition: 0.5s;
+          transform: scale(130%, 130%);
+          opacity: 0.8;
+          border-radius: 5px;
+        }
       }
     }
   }

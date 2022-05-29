@@ -2,7 +2,7 @@
   <div class="in-out-manage">
     <section>
       <h3>进销存管理</h3>
-      <div class="sider-bar">
+      <div class="manage-sider-bar">
         <div @click="() => { $router.push('inManage') }">订单管理</div>
         <div @click="() => { $router.push('outManage') }">销售单管理</div>
         <div @click="() => { $router.push('storageManage') }">仓库管理</div>
@@ -39,7 +39,7 @@ section {
   color: white;
   box-shadow: 0 0 10px #888888;
   cursor: pointer;
-  .sider-bar {
+  .manage-sider-bar {
     margin-top: 80px;
     div {
       line-height: 40px;

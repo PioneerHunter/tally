@@ -1,4 +1,13 @@
 .theme-purple {
+  // 菜单
+  .main {
+    .circle {
+      background-color: #7E57C2;
+      border: 1px solid #7E57C2;
+      box-shadow: 0 0 10px #888888;
+    }
+  }
+
   // 按钮
   .btn {
     margin-right: 10px;
@@ -30,7 +39,7 @@
     section {
       background-color: #7E57C2;
     }
-    .sider-bar {
+    .manage-sider-bar {
       div:hover {
         background-color: #6b2fd2;
       }
@@ -44,6 +53,9 @@
     }
     .swiper-3d {
       background-color: rgba(126, 87, 194, 0.4);
+      .swiper-slide {
+        background-color: rgba(255, 102, 51, 0.8);
+      }
     }
   }
 
@@ -52,6 +64,13 @@
     .chart-bar {
       div {
         background-color: #7E57C2;
+        color: white;
+        &:hover {
+          transition: 0.5s;
+          transform: scale(130%, 130%);
+          opacity: 0.8;
+          border-radius: 5px;
+        }
       }
     }
   }

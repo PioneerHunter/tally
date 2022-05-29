@@ -68,7 +68,9 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <button class="btn" type="primary" @click="ok">确 定</button>
+        <button class="btn" @click="ok">
+          确 定
+        </button>
       </span>
     </el-dialog>
   </div>
@@ -114,6 +116,7 @@ export default {
           { required: true, message: '数量必须且为数字', trigger: 'change' }
         ],
       },
+      theme: sessionStorage.getItem('theme'),
     }
   },
   created () {

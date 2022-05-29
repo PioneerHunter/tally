@@ -98,10 +98,11 @@ export default {
       if (!await this.validateLogin()) return
       let storage = sessionStorage
       storage.setItem("loginState", 2)
+      storage.setItem("theme", 'theme-color')
       this.$router.push('/inManage')
       this.$message.success('登录成功！')
       let body = document.querySelector('body')
-      body.className = 'theme-purple'
+      body.className = 'theme-color'
       // let params = {
       //   username: this.loginForm.name,
       //   password: this.loginForm.password,
